@@ -25,6 +25,10 @@ function captionParts(caption = '') {
   return { description, hashtags: hashtags.join(' ') };
 }
 
+function ArrowUpRight({ className = '' }: { className?: string }) {
+  return <svg className={className} viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3 11 11 3M5 3h6v6" /></svg>;
+}
+
 export default function Gallery() {
   const [posts, setPosts] = useState<InstagramPost[]>([]);
   const [selected, setSelected] = useState<InstagramPost | null>(null);
@@ -32,6 +36,7 @@ export default function Gallery() {
   const [loadState, setLoadState] = useState<'intro' | 'reveal' | 'ready' | 'error'>('intro');
   const [showGalleryLabel, setShowGalleryLabel] = useState(true);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const lightboxTouch = useRef({ x: 0, y: 0, moved: false });
   const loadInstagram = useCallback(async () => {
     const startedAt = Date.now();
     const finishMinimumLoadingTime = () => new Promise<void>((resolve) => {
@@ -62,6 +67,10 @@ export default function Gallery() {
     let target = gallery.scrollLeft;
     let current = gallery.scrollLeft;
     let animationFrame = 0;
+    let touchX = 0;
+    let touchY = 0;
+    let touchScrollLeft = 0;
+    let touchDirection: 'horizontal' | 'vertical' | null = null;
 
     const animate = () => {
       current += (target - current) * 0.22;
@@ -95,12 +104,37 @@ export default function Gallery() {
       setShowGalleryLabel(!aboutSection || gallery.scrollLeft + gallery.clientWidth <= aboutSection.offsetLeft + 2);
     };
 
+    const startTouchScroll = (event: TouchEvent) => {
+      if (selected || event.touches.length !== 1) return;
+      touchX = event.touches[0].clientX;
+      touchY = event.touches[0].clientY;
+      touchScrollLeft = gallery.scrollLeft;
+      touchDirection = null;
+    };
+
+    const moveTouchScroll = (event: TouchEvent) => {
+      if (selected || event.touches.length !== 1) return;
+      const deltaX = touchX - event.touches[0].clientX;
+      const deltaY = touchY - event.touches[0].clientY;
+      if (!touchDirection && Math.max(Math.abs(deltaX), Math.abs(deltaY)) > 5) {
+        touchDirection = Math.abs(deltaY) >= Math.abs(deltaX) ? 'vertical' : 'horizontal';
+      }
+      if (touchDirection !== 'vertical') return;
+      event.preventDefault();
+      gallery.scrollLeft = touchScrollLeft + deltaY;
+      target = current = gallery.scrollLeft;
+    };
+
     window.addEventListener('wheel', moveSideways, { passive: false });
     gallery.addEventListener('scroll', syncAfterTouch, { passive: true });
+    gallery.addEventListener('touchstart', startTouchScroll, { passive: true });
+    gallery.addEventListener('touchmove', moveTouchScroll, { passive: false });
     syncAfterTouch();
     return () => {
       window.removeEventListener('wheel', moveSideways);
       gallery.removeEventListener('scroll', syncAfterTouch);
+      gallery.removeEventListener('touchstart', startTouchScroll);
+      gallery.removeEventListener('touchmove', moveTouchScroll);
       cancelAnimationFrame(animationFrame);
     };
   }, [selected, loadState]);
@@ -112,6 +146,28 @@ export default function Gallery() {
   };
 
   const moveGallery = (direction: number) => galleryRef.current?.scrollBy({ left: direction * window.innerWidth * 0.72, behavior: 'smooth' });
+
+  const startLightboxSwipe = (event: React.TouchEvent) => {
+    if (event.touches.length !== 1) return;
+    lightboxTouch.current = { x: event.touches[0].clientX, y: event.touches[0].clientY, moved: false };
+  };
+
+  const moveLightboxSwipe = (event: React.TouchEvent) => {
+    if (event.touches.length !== 1) return;
+    const deltaX = event.touches[0].clientX - lightboxTouch.current.x;
+    const deltaY = event.touches[0].clientY - lightboxTouch.current.y;
+    if (Math.abs(deltaX) > 8 || Math.abs(deltaY) > 8) lightboxTouch.current.moved = true;
+  };
+
+  const endLightboxSwipe = (event: React.TouchEvent) => {
+    const touch = event.changedTouches[0];
+    if (!touch) return;
+    const deltaX = touch.clientX - lightboxTouch.current.x;
+    const deltaY = touch.clientY - lightboxTouch.current.y;
+    if (Math.abs(deltaX) >= 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15) {
+      moveFullscreen(deltaX < 0 ? 1 : -1);
+    }
+  };
 
   useEffect(() => {
     const navigateWithKeys = (event: KeyboardEvent) => {
@@ -125,7 +181,7 @@ export default function Gallery() {
     return () => window.removeEventListener('keydown', navigateWithKeys);
   });
   return <main>
-    <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite"><span>liebs</span><i>mit</i><span>linse.</span></a><div className="header-right"><a className="instagram-link whatsapp-link" href="https://wa.me/4917588750135" target="_blank" rel="noreferrer">Schreibe uns auf WhatsApp <span>↗</span></a><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a></div></header>
+    <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite"><span>liebs</span><i>mit</i><span>linse.</span></a><div className="header-right"><a className="instagram-link whatsapp-link" href="https://wa.me/4917588750135" target="_blank" rel="noreferrer">Schreibe uns auf WhatsApp <ArrowUpRight className="external-arrow" /></a><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <ArrowUpRight className="external-arrow" /></a></div></header>
     <section className="gallery-section" id="top" aria-label="Instagram Galerie">
       {(loadState === 'intro' || loadState === 'reveal') && <div className={`gallery-intro ${loadState === 'reveal' ? 'is-revealing' : ''}`} role="status" aria-live="polite"><p>Weil wichtige Momente<br /><em>es wert sind, festgehalten<br />zu werden.</em></p></div>}
       <div className={`gallery-meta ${showGalleryLabel && loadState === 'ready' ? 'is-visible' : ''}`}><span>Echte liebsmitlinse-Momente <i className="scroll-nudge" aria-hidden="true">→</i></span></div>
@@ -133,7 +189,7 @@ export default function Gallery() {
         {loadState === 'error' && <div className="gallery-loading gallery-error" role="alert"><p>Die Galerie konnte gerade nicht geladen werden.</p><button onClick={loadInstagram}>Erneut versuchen</button></div>}
         {posts.map((post, index) => {
           const { description } = captionParts(post.caption);
-          return <button className="gallery-card" style={{ animationDelay: `${Math.min(index * 55, 440)}ms` }} key={post.id} onClick={() => { setSelected(post); setSelectedIndex(0); }} aria-label={`Beitrag öffnen: ${post.caption || 'Instagram Beitrag'}`}><img src={post.thumbnail_url || post.media_url} alt={post.caption || 'Hochzeitsmoment fotografiert von Liebs mit Linse'} loading={index > 3 ? 'lazy' : 'eager'} /><span className="card-overlay"><span className="post-copy">{post.location?.name && <small>⌖ {post.location.name}</small>}{description && <b>{description}</b>}</span><strong>{String(index + 1).padStart(2, '0')} ↗</strong></span>{post.media_type === 'VIDEO' && <span className="media-badge video-badge" aria-hidden="true">▶</span>}{post.media_type === 'CAROUSEL_ALBUM' && <span className="media-badge carousel-badge" aria-hidden="true" />}</button>;
+          return <button className="gallery-card" style={{ animationDelay: `${Math.min(index * 55, 440)}ms` }} key={post.id} onClick={() => { setSelected(post); setSelectedIndex(0); }} aria-label={`Beitrag öffnen: ${post.caption || 'Instagram Beitrag'}`}><img src={post.thumbnail_url || post.media_url} alt={post.caption || 'Hochzeitsmoment fotografiert von Liebs mit Linse'} loading={index > 3 ? 'lazy' : 'eager'} /><span className="card-overlay"><span className="post-copy">{post.location?.name && <small>⌖ {post.location.name}</small>}{description && <b>{description}</b>}</span><strong>{String(index + 1).padStart(2, '0')} <ArrowUpRight className="post-arrow" /></strong></span>{post.media_type === 'VIDEO' && <span className="media-badge video-badge" aria-hidden="true">▶</span>}{post.media_type === 'CAROUSEL_ALBUM' && <span className="media-badge carousel-badge" aria-hidden="true" />}</button>;
         })}
         {(loadState === 'ready' || loadState === 'reveal') && <footer className="about-footer">
           <div className="about-grid">
@@ -148,7 +204,7 @@ export default function Gallery() {
         </footer>}
       </div>
     </section>
-    {selected && selectedMedia.length > 0 && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Bild in Vollansicht" onClick={() => setSelected(null)}>
+    {selected && selectedMedia.length > 0 && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Bild in Vollansicht" onTouchStart={startLightboxSwipe} onTouchMove={moveLightboxSwipe} onTouchEnd={endLightboxSwipe} onClick={() => { if (!lightboxTouch.current.moved) setSelected(null); lightboxTouch.current.moved = false; }}>
       <div className="fullscreen-track" style={{ transform: `translate3d(-${selectedIndex * 100}vw,0,0)` }}>
         {selectedMedia.map((media) => <div className="fullscreen-slide" key={media.id}>{media.media_type === 'VIDEO' ? <video className="fullscreen-media" src={media.media_url} poster={media.thumbnail_url} autoPlay={media.id === selectedMedia[selectedIndex]?.id} loop muted playsInline /> : <img className="fullscreen-media" src={media.media_url} alt="Hochzeitsfotografie in Vollansicht" />}</div>)}
       </div>
