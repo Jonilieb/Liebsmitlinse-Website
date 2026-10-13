@@ -52,11 +52,12 @@ body{overflow:hidden}
 .gallery-arrow:hover,.gallery-arrow:focus-visible{background:transparent;color:#fff;transform:scale(1.12);opacity:1}
 .gallery-arrow.main-previous{left:18px}.gallery-arrow.main-next{right:18px}
 .gallery-card:hover img{transform:none;filter:none}
-.gallery-scroll .card-overlay{align-items:flex-end;justify-content:space-between;padding:22px;opacity:0;background:none;color:var(--ink);pointer-events:none}
-.gallery-scroll .gallery-card:hover .card-overlay,.gallery-scroll .gallery-card:focus-visible .card-overlay{opacity:1}
-.post-copy{display:flex;flex-direction:column;align-items:flex-start;gap:7px;max-width:min(430px,72%);padding:15px 17px;background:rgba(243,240,232,.92);backdrop-filter:blur(8px);text-align:left;box-shadow:0 8px 30px rgba(20,22,19,.12)}
+.gallery-scroll .card-overlay{align-items:flex-end;justify-content:space-between;padding:22px;opacity:0;background:none;color:var(--ink);pointer-events:none;transition:opacity .3s ease}
+.gallery-scroll .gallery-card:hover .card-overlay,.gallery-scroll .gallery-card:focus-visible .card-overlay{opacity:1;transition-delay:1s}
+.post-copy{display:flex;flex-direction:column;align-items:flex-start;gap:7px;max-width:min(540px,72%);padding:15px 17px;background:rgba(243,240,232,.92);backdrop-filter:blur(8px);text-align:left;box-shadow:0 8px 30px rgba(20,22,19,.12);pointer-events:auto}
 .post-copy small{font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:#686c61}
-.post-copy b{font:16px/1.35 Georgia,serif;font-weight:400;text-transform:none;letter-spacing:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.post-copy b{font:16px/1.35 Georgia,serif;font-weight:400;text-transform:none;letter-spacing:normal;display:block;max-height:4.05em;overflow:hidden;transition:max-height .55s cubic-bezier(.22,.75,.22,1)}
+.post-copy:hover b{max-height:55vh;overflow-y:auto}
 .post-copy i{font:normal 9px/1.45 var(--font-geist-sans),Arial,sans-serif;letter-spacing:.03em;color:#6e7268;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 .gallery-scroll .card-overlay>strong{font:italic 13px Georgia,serif;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.65)}
 
