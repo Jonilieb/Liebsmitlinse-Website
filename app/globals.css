@@ -136,7 +136,7 @@ body{font-family:Arial,Helvetica,sans-serif}
 .card-overlay>strong{display:inline-flex;align-items:center;gap:4px}
 .post-arrow{width:11px;height:11px}
 .lightbox{touch-action:none}
-@media(max-width:760px){.gallery-scroll{touch-action:pan-x}.external-arrow{width:11px;height:11px}}
+@media(max-width:760px){.gallery-scroll{touch-action:pan-x}.gallery-scroll .about-footer{touch-action:pan-y;overscroll-behavior-y:contain}.external-arrow{width:11px;height:11px}}
 
 /* Stronger mobile typography for the intro and photographer signature. */
 @media(max-width:760px){
