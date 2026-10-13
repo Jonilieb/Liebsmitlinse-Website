@@ -45,7 +45,7 @@ body{overflow:hidden}
 .media-badge{background:transparent;padding:0;text-shadow:0 1px 7px rgba(0,0,0,.6)}
 .video-badge{font-size:13px;color:#fff}
 .carousel-badge{width:19px;height:19px;top:17px;right:17px}
-.carousel-badge::before,.carousel-badge::after{content:"";position:absolute;width:13px;height:13px;border:1.5px solid #fff;border-radius:2px;box-sizing:border-box;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
+.carousel-badge::before,.carousel-badge::after{content:"";position:absolute;width:13px;height:13px;border:1px solid var(--cream);border-radius:2px;box-sizing:border-box;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))}
 .carousel-badge::before{left:0;top:4px;background:transparent}
 .carousel-badge::after{left:4px;top:0;background:transparent}
 .gallery-card:hover img{transform:none;filter:none}
