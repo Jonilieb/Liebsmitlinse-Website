@@ -82,18 +82,10 @@ export default function Gallery() {
   }, [selected]);
   const count = useMemo(() => String(posts.length).padStart(2, '0'), [posts.length]);
   const selectedMedia = selected?.children?.data?.length ? selected.children.data : selected ? [{ id: selected.id, media_type: selected.media_type, media_url: selected.media_url, thumbnail_url: selected.thumbnail_url }] : [];
-  const activeMedia = selectedMedia[selectedIndex];
-  const allMedia = useMemo(() => posts.flatMap((post) => {
-    const media = post.children?.data?.length ? post.children.data : [{ id: post.id, media_type: post.media_type, media_url: post.media_url, thumbnail_url: post.thumbnail_url }];
-    return media.map((item, childIndex) => ({ post, item, childIndex }));
-  }), [posts]);
-  const activeGlobalIndex = selected && activeMedia ? allMedia.findIndex(({ post, childIndex }) => post.id === selected.id && childIndex === selectedIndex) : -1;
 
   const moveFullscreen = (direction: number) => {
-    if (!allMedia.length) return;
-    const nextIndex = (Math.max(activeGlobalIndex, 0) + direction + allMedia.length) % allMedia.length;
-    setSelected(allMedia[nextIndex].post);
-    setSelectedIndex(allMedia[nextIndex].childIndex);
+    if (selectedMedia.length < 2) return;
+    setSelectedIndex(Math.max(0, Math.min(selectedMedia.length - 1, selectedIndex + direction)));
   };
 
   const moveGallery = (direction: number) => galleryRef.current?.scrollBy({ left: direction * window.innerWidth * 0.72, behavior: 'smooth' });
@@ -127,9 +119,11 @@ export default function Gallery() {
         </footer>
       </div>
     </section>
-    {selected && activeMedia && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Bild in Vollansicht" onClick={() => setSelected(null)}>
-      {activeMedia.media_type === 'VIDEO' ? <video className="fullscreen-media" src={activeMedia.media_url} poster={activeMedia.thumbnail_url} autoPlay loop muted playsInline /> : <img className="fullscreen-media" src={activeMedia.media_url} alt="Hochzeitsfotografie in Vollansicht" />}
-      {allMedia.length > 1 && <><button className="carousel-nav previous" onClick={(event) => { event.stopPropagation(); moveFullscreen(-1); }} aria-label="Vorheriges Bild">‹</button><button className="carousel-nav next" onClick={(event) => { event.stopPropagation(); moveFullscreen(1); }} aria-label="Nächstes Bild">›</button><span className="carousel-count">{activeGlobalIndex + 1} / {allMedia.length}</span></>}
+    {selected && selectedMedia.length > 0 && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Bild in Vollansicht" onClick={() => setSelected(null)}>
+      <div className="fullscreen-track" style={{ transform: `translate3d(-${selectedIndex * 100}vw,0,0)` }}>
+        {selectedMedia.map((media) => <div className="fullscreen-slide" key={media.id}>{media.media_type === 'VIDEO' ? <video className="fullscreen-media" src={media.media_url} poster={media.thumbnail_url} autoPlay={media.id === selectedMedia[selectedIndex]?.id} loop muted playsInline /> : <img className="fullscreen-media" src={media.media_url} alt="Hochzeitsfotografie in Vollansicht" />}</div>)}
+      </div>
+      {selectedMedia.length > 1 && <><button className="carousel-nav previous" disabled={selectedIndex === 0} onClick={(event) => { event.stopPropagation(); moveFullscreen(-1); }} aria-label="Vorheriges Bild">‹</button><button className="carousel-nav next" disabled={selectedIndex === selectedMedia.length - 1} onClick={(event) => { event.stopPropagation(); moveFullscreen(1); }} aria-label="Nächstes Bild">›</button><span className="carousel-count">{selectedIndex + 1} / {selectedMedia.length}</span></>}
       <span className="close-hint">Klicken zum Schließen</span>
     </div>}
   </main>;
