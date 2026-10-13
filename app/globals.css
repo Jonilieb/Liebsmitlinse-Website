@@ -93,3 +93,20 @@ body{font-family:Arial,Helvetica,sans-serif}
 @keyframes scroll-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(7px)}}
 @media(max-width:760px){.site-header{height:62px}.gallery-section{height:calc(100dvh - 62px)}.gallery-meta{left:20px}}
 @media(prefers-reduced-motion:reduce){.scroll-nudge{animation:none}}
+
+/* Fit the complete photographer profile into one desktop viewport. */
+@media(min-width:761px){
+  .gallery-scroll .about-footer{display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:clamp(24px,3.2vh,38px) 4vw clamp(18px,2.4vh,30px);overflow:hidden}
+  .gallery-scroll .about-grid{grid-template-columns:minmax(0,1.05fr) minmax(480px,.95fr);gap:5vw;align-items:center;padding:clamp(20px,3.5vh,42px) 0;min-height:0}
+  .gallery-scroll .about-grid h1{font-size:clamp(58px,5.7vw,96px);line-height:.88}
+  .gallery-scroll .profile-entry{grid-template-columns:135px minmax(0,1fr);gap:24px;padding:clamp(12px,1.7vh,20px) 0}
+  .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong{font-size:clamp(14px,1.05vw,17px);line-height:1.42}
+  .gallery-scroll .footer-bottom{padding-top:clamp(14px,2vh,24px)}
+  .gallery-scroll .about-footer .footer-script{font-size:clamp(32px,4vw,58px)}
+}
+@media(min-width:761px) and (max-height:760px){
+  .gallery-scroll .about-grid{padding:16px 0}
+  .gallery-scroll .about-grid h1{font-size:clamp(50px,5vw,78px)}
+  .gallery-scroll .profile-entry{padding:10px 0}
+  .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong{font-size:14px;line-height:1.35}
+}
