@@ -34,7 +34,7 @@ export default function Gallery() {
     let animationFrame = 0;
 
     const animate = () => {
-      current += (target - current) * 0.14;
+      current += (target - current) * 0.22;
       gallery.scrollLeft = current;
       if (Math.abs(target - current) > 0.35) {
         animationFrame = requestAnimationFrame(animate);
@@ -52,7 +52,7 @@ export default function Gallery() {
       const rawDelta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
       const controlledDelta = Math.sign(rawDelta) * Math.min(Math.abs(rawDelta), 120) * multiplier;
       const maximum = gallery.scrollWidth - gallery.clientWidth;
-      target = Math.max(0, Math.min(maximum, target + controlledDelta * 1.15));
+      target = Math.max(0, Math.min(maximum, target + controlledDelta * 1.22));
       if (!animationFrame) {
         current = gallery.scrollLeft;
         animationFrame = requestAnimationFrame(animate);
