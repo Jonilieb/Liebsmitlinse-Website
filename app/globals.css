@@ -19,8 +19,6 @@
 .profile-location strong{color:var(--ink)}
 .contact-details{font-style:normal;font:17px/1.42 Georgia,'Times New Roman',serif;color:#62675b}
 .contact-details a{font:inherit;text-transform:none;letter-spacing:0;border:0;padding:0}
-.brand-mark{display:block;width:36px;height:36px;object-fit:cover;mix-blend-mode:multiply;margin-right:7px}
-@media(max-width:760px){.brand-mark{width:30px;height:30px;margin-right:5px}}
 .footer-bottom{border-top:1px solid var(--line);padding-top:28px;display:flex;justify-content:space-between;align-items:flex-end}
 .about-footer .footer-script{font:italic clamp(38px,6vw,80px) Georgia,serif;letter-spacing:-.05em}
 .about-footer a{font-size:11px;text-transform:uppercase;letter-spacing:.12em;text-decoration:none;border-bottom:1px solid;padding-bottom:5px}
@@ -106,7 +104,7 @@ body{font-family:Arial,Helvetica,sans-serif}
   .gallery-scroll .about-identity{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(180px,.72fr);align-items:end;min-width:0;height:100%}
   .gallery-scroll .about-identity h1{position:relative;z-index:1;align-self:stretch;display:flex;flex-direction:column;height:100%;margin:0}
   .gallery-scroll .identity-kicker{display:block;margin-top:auto;margin-bottom:14px;font:9px/1.2 Arial,Helvetica,sans-serif;letter-spacing:.16em;text-transform:uppercase}
-  .gallery-scroll .about-identity img{display:block;width:100%;height:min(54vh,560px);object-fit:cover;object-position:center 38%;align-self:end;margin-left:-8%}
+  .gallery-scroll .about-identity img{display:block;width:115%;height:min(59vh,620px);object-fit:cover;object-position:center 30%;align-self:center;margin-left:-12%;transform:translateY(-2vh)}
   .gallery-scroll .about-profile{height:100%;display:grid;grid-template-rows:repeat(4,minmax(0,1fr))}
   .gallery-scroll .profile-entry{align-content:center}
   .gallery-scroll .profile-entry{grid-template-columns:135px minmax(0,1fr);gap:24px;padding:clamp(12px,1.7vh,20px) 0}
@@ -117,7 +115,7 @@ body{font-family:Arial,Helvetica,sans-serif}
 @media(min-width:761px) and (max-height:760px){
   .gallery-scroll .about-grid{padding:16px 0}
   .gallery-scroll .about-grid h1{font-size:clamp(50px,5vw,78px)}
-  .gallery-scroll .about-identity img{height:min(48vh,400px)}
+  .gallery-scroll .about-identity img{height:min(52vh,440px)}
   .gallery-scroll .profile-entry{padding:10px 0}
   .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong{font-size:14px;line-height:1.35}
 }
