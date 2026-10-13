@@ -29,14 +29,14 @@ export default function Gallery() {
   const [posts, setPosts] = useState<InstagramPost[]>([]);
   const [selected, setSelected] = useState<InstagramPost | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [loadState, setLoadState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [loadState, setLoadState] = useState<'intro' | 'reveal' | 'ready' | 'error'>('intro');
   const galleryRef = useRef<HTMLDivElement>(null);
   const loadInstagram = useCallback(async () => {
     const startedAt = Date.now();
     const finishMinimumLoadingTime = () => new Promise<void>((resolve) => {
-      window.setTimeout(resolve, Math.max(0, 1000 - (Date.now() - startedAt)));
+      window.setTimeout(resolve, Math.max(0, 1200 - (Date.now() - startedAt)));
     });
-    setLoadState('loading');
+    setLoadState('intro');
     try {
       const response = await fetch('/api/instagram');
       if (!response.ok) throw new Error('Request failed');
@@ -46,7 +46,8 @@ export default function Gallery() {
       if (!apiPosts.length) throw new Error('No posts');
       await finishMinimumLoadingTime();
       setPosts(apiPosts);
-      setLoadState('ready');
+      setLoadState('reveal');
+      window.setTimeout(() => setLoadState('ready'), 1500);
     } catch {
       await finishMinimumLoadingTime();
       setLoadState('error');
@@ -121,18 +122,18 @@ export default function Gallery() {
     return () => window.removeEventListener('keydown', navigateWithKeys);
   });
   return <main>
-    <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite"><span>liebs</span><i>mit</i><span>linse.</span></a><div className="header-right"><span className={`sync-state ${loadState === 'ready' ? 'is-live' : ''}`}><b /> {loadState === 'ready' ? 'Live von Instagram' : loadState === 'loading' ? 'Instagram wird geladen' : 'Verbindung unterbrochen'}</span><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a></div></header>
+    <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite"><span>liebs</span><i>mit</i><span>linse.</span></a><div className="header-right"><span className={`sync-state ${loadState === 'ready' || loadState === 'reveal' ? 'is-live' : ''}`}><b /> {loadState === 'ready' || loadState === 'reveal' ? 'Live von Instagram' : loadState === 'intro' ? 'Instagram wird geladen' : 'Verbindung unterbrochen'}</span><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a></div></header>
     <section className="gallery-section" id="top" aria-label="Instagram Galerie">
+      {(loadState === 'intro' || loadState === 'reveal') && <div className={`gallery-intro ${loadState === 'reveal' ? 'is-revealing' : ''}`} role="status" aria-live="polite"><p>Weil wichtige Momente<br /><em>es wert sind, festgehalten<br />zu werden.</em></p></div>}
       <div className="gallery-meta"><span>{loadState === 'ready' ? 'Echte Momente · Scrollen →' : 'Echte Momente'}</span><span>{loadState === 'ready' ? `${count} Bilder` : 'Instagram'}</span></div>
       {loadState === 'ready' && <><button className="gallery-arrow main-previous" onClick={() => moveGallery(-1)} aria-label="Galerie nach links">‹</button><button className="gallery-arrow main-next" onClick={() => moveGallery(1)} aria-label="Galerie nach rechts">›</button></>}
       <div className="gallery-scroll" ref={galleryRef} tabIndex={0} aria-label="Horizontal scrollbare Bildergalerie">
-        {loadState === 'loading' && <div className="gallery-loading" role="status"><span className="loading-mark" /><p>Augenblicke werden geladen</p></div>}
         {loadState === 'error' && <div className="gallery-loading gallery-error" role="alert"><p>Die Galerie konnte gerade nicht geladen werden.</p><button onClick={loadInstagram}>Erneut versuchen</button></div>}
         {posts.map((post, index) => {
           const { description } = captionParts(post.caption);
           return <button className="gallery-card" style={{ animationDelay: `${Math.min(index * 55, 440)}ms` }} key={post.id} onClick={() => { setSelected(post); setSelectedIndex(0); }} aria-label={`Beitrag öffnen: ${post.caption || 'Instagram Beitrag'}`}><img src={post.thumbnail_url || post.media_url} alt={post.caption || 'Hochzeitsmoment fotografiert von Liebs mit Linse'} loading={index > 3 ? 'lazy' : 'eager'} /><span className="card-overlay"><span className="post-copy">{post.location?.name && <small>⌖ {post.location.name}</small>}{description && <b>{description}</b>}</span><strong>{String(index + 1).padStart(2, '0')} ↗</strong></span>{post.media_type === 'VIDEO' && <span className="media-badge video-badge" aria-hidden="true">▶</span>}{post.media_type === 'CAROUSEL_ALBUM' && <span className="media-badge carousel-badge" aria-hidden="true" />}</button>;
         })}
-        {loadState === 'ready' && <footer className="about-footer">
+        {(loadState === 'ready' || loadState === 'reveal') && <footer className="about-footer">
           <div className="about-kicker">Hinter der Linse</div>
           <div className="about-grid"><h1>Wir sind<br /><em>Katharina & Jonas.</em></h1><div className="about-copy"><p>Wir fotografieren die lauten, leisen und vollkommen ungeplanten Augenblicke eures Tages – authentisch, nah und mit viel Liebe fürs Dazwischen.</p><div className="location"><span>Zu Hause in</span><strong>Reutlingen · Tübingen<br />Sigmaringen & überall dort,<br />wo ihr Ja sagt.</strong></div></div></div>
           <div className="footer-bottom"><span className="footer-script">liebs mit linse.</span><a href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">@liebsmitlinse ↗</a></div>
