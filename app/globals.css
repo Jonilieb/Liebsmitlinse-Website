@@ -176,3 +176,7 @@ body{font-family:Arial,Helvetica,sans-serif}
   .gallery-scroll .profile-entry>span{padding:0}
   .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong,.gallery-scroll .profile-entry .contact-details{font-size:clamp(24px,1.9vw,34px);line-height:1.38}
 }
+
+/* Keep every gallery loading surface aligned with the neutral intro gray. */
+.gallery-section,.gallery-loading,.gallery-card{background:#181818}
+.gallery-scroll .gallery-card{border-right-color:#181818}
