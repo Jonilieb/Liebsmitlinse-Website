@@ -17,6 +17,9 @@
 .profile-entry span{font-size:9px;line-height:1.45;letter-spacing:.14em;text-transform:uppercase;padding-top:4px}
 .profile-entry p,.profile-entry strong{margin:0;font:17px/1.48 Georgia,serif;font-weight:400;color:#62675b}
 .profile-location strong{color:var(--ink)}
+.imprint{font-style:normal;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-size:9px;line-height:1.35;letter-spacing:.04em;color:#62675b}
+.imprint b{font-weight:400;text-transform:uppercase;letter-spacing:.14em;color:var(--ink);margin-bottom:2px}
+.imprint a{font-size:9px;line-height:1.25;text-transform:none;letter-spacing:.04em;border:0;padding:0}
 .footer-bottom{border-top:1px solid var(--line);padding-top:28px;display:flex;justify-content:space-between;align-items:flex-end}
 .about-footer .footer-script{font:italic clamp(38px,6vw,80px) Georgia,serif;letter-spacing:-.05em}
 .about-footer a{font-size:11px;text-transform:uppercase;letter-spacing:.12em;text-decoration:none;border-bottom:1px solid;padding-bottom:5px}
@@ -97,11 +100,14 @@ body{font-family:Arial,Helvetica,sans-serif}
 /* Fit the complete photographer profile into one desktop viewport. */
 @media(min-width:761px){
   .gallery-scroll .about-footer{display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:clamp(24px,3.2vh,38px) 4vw clamp(18px,2.4vh,30px);overflow:hidden}
+  .gallery-scroll .about-kicker{width:50%}
   .gallery-scroll .about-grid{grid-template-columns:minmax(0,1.05fr) minmax(480px,.95fr);gap:5vw;align-items:center;padding:clamp(20px,3.5vh,42px) 0;min-height:0}
   .gallery-scroll .about-grid h1{font-size:clamp(58px,5.7vw,96px);line-height:.88}
   .gallery-scroll .about-identity{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(180px,.72fr);align-items:end;min-width:0;height:100%}
   .gallery-scroll .about-identity h1{position:relative;z-index:1;align-self:center}
   .gallery-scroll .about-identity img{display:block;width:100%;height:min(54vh,560px);object-fit:cover;object-position:center 38%;align-self:end;margin-left:-8%}
+  .gallery-scroll .about-profile{height:100%;display:grid;grid-template-rows:repeat(3,minmax(0,1fr))}
+  .gallery-scroll .profile-entry{align-content:center}
   .gallery-scroll .profile-entry{grid-template-columns:135px minmax(0,1fr);gap:24px;padding:clamp(12px,1.7vh,20px) 0}
   .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong{font-size:clamp(14px,1.05vw,17px);line-height:1.42}
   .gallery-scroll .footer-bottom{padding-top:clamp(14px,2vh,24px)}
@@ -115,3 +121,4 @@ body{font-family:Arial,Helvetica,sans-serif}
   .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong{font-size:14px;line-height:1.35}
 }
 @media(max-width:760px){.about-identity{display:grid;grid-template-columns:1fr;gap:24px}.about-identity img{display:block;width:min(78%,340px);height:auto;margin:0 auto}}
+@media(max-width:760px){.imprint{text-align:left;align-items:flex-start}.footer-bottom{gap:32px;flex-wrap:wrap}}

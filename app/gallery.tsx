@@ -145,7 +145,7 @@ export default function Gallery() {
               <section className="profile-entry profile-location"><span>Zuhause in</span><strong>Reutlingen · Tübingen<br />Sigmaringen & überall dort,<br />wo ihr Ja sagt.</strong></section>
             </div>
           </div>
-          <div className="footer-bottom"><span className="footer-script">liebs mit linse.</span><a href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">@liebsmitlinse ↗</a></div>
+          <div className="footer-bottom"><span className="footer-script">liebs mit linse.</span><address className="imprint"><b>Impressum</b><span>Liebsmitlinse<br />Katharina &amp; Jonas Lieb<br />Stuttgarter Str. 35<br />72666 Neckartailfingen</span><a href="mailto:jonas_wurster@gmx.net">jonas_wurster@gmx.net</a><a href="tel:+4915788750135">+49 15788750135</a></address></div>
         </footer>}
       </div>
     </section>
