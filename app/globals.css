@@ -19,6 +19,8 @@
 .profile-location strong{color:var(--ink)}
 .contact-details{font-style:normal;font:17px/1.42 Georgia,'Times New Roman',serif;color:#62675b}
 .contact-details a{font:inherit;text-transform:none;letter-spacing:0;border:0;padding:0}
+.brand-mark{display:block;width:36px;height:36px;object-fit:cover;mix-blend-mode:multiply;margin-right:7px}
+@media(max-width:760px){.brand-mark{width:30px;height:30px;margin-right:5px}}
 .footer-bottom{border-top:1px solid var(--line);padding-top:28px;display:flex;justify-content:space-between;align-items:flex-end}
 .about-footer .footer-script{font:italic clamp(38px,6vw,80px) Georgia,serif;letter-spacing:-.05em}
 .about-footer a{font-size:11px;text-transform:uppercase;letter-spacing:.12em;text-decoration:none;border-bottom:1px solid;padding-bottom:5px}
