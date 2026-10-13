@@ -71,6 +71,10 @@ export default function Gallery() {
     let touchY = 0;
     let touchScrollLeft = 0;
     let touchDirection: 'horizontal' | 'vertical' | null = null;
+    let touchLastY = 0;
+    let touchLastTime = 0;
+    let touchVelocity = 0;
+    let inertiaFrame = 0;
 
     const animate = () => {
       current += (target - current) * 0.22;
@@ -106,8 +110,13 @@ export default function Gallery() {
 
     const startTouchScroll = (event: TouchEvent) => {
       if (selected || event.touches.length !== 1) return;
+      cancelAnimationFrame(inertiaFrame);
+      inertiaFrame = 0;
       touchX = event.touches[0].clientX;
       touchY = event.touches[0].clientY;
+      touchLastY = touchY;
+      touchLastTime = performance.now();
+      touchVelocity = 0;
       touchScrollLeft = gallery.scrollLeft;
       touchDirection = null;
     };
@@ -121,21 +130,50 @@ export default function Gallery() {
       }
       if (touchDirection !== 'vertical') return;
       event.preventDefault();
+      const now = performance.now();
+      const elapsed = Math.max(1, now - touchLastTime);
+      const instantVelocity = (touchLastY - event.touches[0].clientY) / elapsed;
+      touchVelocity = touchVelocity * 0.68 + instantVelocity * 0.32;
+      touchLastY = event.touches[0].clientY;
+      touchLastTime = now;
       gallery.scrollLeft = touchScrollLeft + deltaY;
       target = current = gallery.scrollLeft;
+    };
+
+    const endTouchScroll = () => {
+      if (touchDirection !== 'vertical' || Math.abs(touchVelocity) < 0.04) return;
+      let velocity = touchVelocity * 18;
+      const glide = () => {
+        const maximum = gallery.scrollWidth - gallery.clientWidth;
+        const next = Math.max(0, Math.min(maximum, gallery.scrollLeft + velocity));
+        gallery.scrollLeft = next;
+        target = current = next;
+        velocity *= 0.94;
+        if (Math.abs(velocity) > 0.18 && next > 0 && next < maximum) {
+          inertiaFrame = requestAnimationFrame(glide);
+        } else {
+          inertiaFrame = 0;
+        }
+      };
+      inertiaFrame = requestAnimationFrame(glide);
     };
 
     window.addEventListener('wheel', moveSideways, { passive: false });
     gallery.addEventListener('scroll', syncAfterTouch, { passive: true });
     gallery.addEventListener('touchstart', startTouchScroll, { passive: true });
     gallery.addEventListener('touchmove', moveTouchScroll, { passive: false });
+    gallery.addEventListener('touchend', endTouchScroll, { passive: true });
+    gallery.addEventListener('touchcancel', endTouchScroll, { passive: true });
     syncAfterTouch();
     return () => {
       window.removeEventListener('wheel', moveSideways);
       gallery.removeEventListener('scroll', syncAfterTouch);
       gallery.removeEventListener('touchstart', startTouchScroll);
       gallery.removeEventListener('touchmove', moveTouchScroll);
+      gallery.removeEventListener('touchend', endTouchScroll);
+      gallery.removeEventListener('touchcancel', endTouchScroll);
       cancelAnimationFrame(animationFrame);
+      cancelAnimationFrame(inertiaFrame);
     };
   }, [selected, loadState]);
   const selectedMedia = selected?.children?.data?.length ? selected.children.data : selected ? [{ id: selected.id, media_type: selected.media_type, media_url: selected.media_url, thumbnail_url: selected.thumbnail_url }] : [];
