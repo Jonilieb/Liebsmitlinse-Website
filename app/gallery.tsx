@@ -29,14 +29,47 @@ export default function Gallery() {
   useEffect(() => {
     const gallery = galleryRef.current;
     if (!gallery) return;
+    let target = gallery.scrollLeft;
+    let current = gallery.scrollLeft;
+    let animationFrame = 0;
+
+    const animate = () => {
+      current += (target - current) * 0.14;
+      gallery.scrollLeft = current;
+      if (Math.abs(target - current) > 0.35) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        gallery.scrollLeft = target;
+        current = target;
+        animationFrame = 0;
+      }
+    };
+
     const moveSideways = (event: WheelEvent) => {
-      if (event.deltaY === 0 || selected) return;
+      if (selected) return;
       event.preventDefault();
       const multiplier = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 24 : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? window.innerWidth : 1;
-      gallery.scrollLeft += event.deltaY * multiplier;
+      const rawDelta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+      const controlledDelta = Math.sign(rawDelta) * Math.min(Math.abs(rawDelta), 120) * multiplier;
+      const maximum = gallery.scrollWidth - gallery.clientWidth;
+      target = Math.max(0, Math.min(maximum, target + controlledDelta * 1.15));
+      if (!animationFrame) {
+        current = gallery.scrollLeft;
+        animationFrame = requestAnimationFrame(animate);
+      }
     };
+
+    const syncAfterTouch = () => {
+      if (!animationFrame) target = current = gallery.scrollLeft;
+    };
+
     window.addEventListener('wheel', moveSideways, { passive: false });
-    return () => window.removeEventListener('wheel', moveSideways);
+    gallery.addEventListener('scroll', syncAfterTouch, { passive: true });
+    return () => {
+      window.removeEventListener('wheel', moveSideways);
+      gallery.removeEventListener('scroll', syncAfterTouch);
+      cancelAnimationFrame(animationFrame);
+    };
   }, [selected]);
   const count = useMemo(() => String(posts.length).padStart(2, '0'), [posts.length]);
   return <main>
