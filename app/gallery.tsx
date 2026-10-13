@@ -138,7 +138,7 @@ export default function Gallery() {
         {(loadState === 'ready' || loadState === 'reveal') && <footer className="about-footer">
           <div className="about-kicker">Hinter der Linse</div>
           <div className="about-grid">
-            <h1>Wir sind<br /><em>Katharina &<br />Jonas Lieb.</em></h1>
+            <div className="about-identity"><h1>Wir sind<br /><em>Katharina &<br />Jonas Lieb.</em></h1><img src="/katharina-jonas-lieb-cutout.png" alt="Katharina und Jonas Lieb" /></div>
             <div className="about-profile">
               <section className="profile-entry"><span>Was wir tun</span><p>Wir fotografieren die lauten, leisen und vollkommen ungeplanten Augenblicke eures Tages – authentisch, nah und mit viel Liebe fürs Dazwischen.</p></section>
               <section className="profile-entry"><span>Das zeichnet uns aus</span><p>Wir sind ein Team. Bei uns bekommt ihr nicht nur einen Lieb, sondern gleich zwei. So bringt jeder von uns seine eigenen Stärken ein – und gemeinsam machen wir euer Shooting zu einem reibungslosen, entspannten Erlebnis.</p></section>
