@@ -109,7 +109,7 @@ export default function Gallery() {
     };
 
     const startTouchScroll = (event: TouchEvent) => {
-      if (selected || event.touches.length !== 1) return;
+      if (selected || window.matchMedia('(max-width: 760px)').matches || event.touches.length !== 1) return;
       cancelAnimationFrame(inertiaFrame);
       inertiaFrame = 0;
       touchX = event.touches[0].clientX;
@@ -122,7 +122,7 @@ export default function Gallery() {
     };
 
     const moveTouchScroll = (event: TouchEvent) => {
-      if (selected || event.touches.length !== 1) return;
+      if (selected || window.matchMedia('(max-width: 760px)').matches || event.touches.length !== 1) return;
       const deltaX = touchX - event.touches[0].clientX;
       const deltaY = touchY - event.touches[0].clientY;
       if (!touchDirection && Math.max(Math.abs(deltaX), Math.abs(deltaY)) > 5) {

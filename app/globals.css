@@ -180,3 +180,21 @@ body{font-family:Arial,Helvetica,sans-serif}
 /* Keep every gallery loading surface aligned with the neutral intro gray. */
 .gallery-section,.gallery-loading,.gallery-card{background:#181818}
 .gallery-scroll .gallery-card{border-right-color:#181818}
+
+/* Mobile uses a natural vertical feed; desktop keeps the horizontal portfolio. */
+@media(max-width:760px){
+  body{overflow-x:hidden;overflow-y:auto}
+  .gallery-section{height:auto;min-height:calc(100dvh - 62px);overflow:visible}
+  .gallery-intro{position:absolute;inset:0 0 auto;height:calc(100dvh - 62px)}
+  .gallery-scroll{display:block;height:auto;overflow:visible;touch-action:pan-y}
+  .gallery-scroll .gallery-card{display:block;width:100%;height:auto;min-height:0;border-right:0;border-bottom:1px solid #181818}
+  .gallery-scroll .gallery-card img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain}
+  .gallery-loading{width:100%;height:calc(100dvh - 62px)}
+  .gallery-meta{position:absolute}
+  .gallery-scroll .about-footer{display:block;width:100%;height:auto;padding:0;overflow:visible;touch-action:pan-y}
+  .gallery-scroll .about-grid{display:block;width:100%;height:auto;padding:0}
+  .gallery-scroll .about-identity{width:100%;height:auto;min-height:100dvh;padding:42px 7vw 34px;display:grid;grid-template-rows:auto minmax(360px,62vh) auto;grid-template-areas:"label" "photo" "title";gap:20px}
+  .gallery-scroll .about-identity img{width:100%;height:100%;object-fit:cover}
+  .gallery-scroll .about-profile{display:block;width:100%;height:auto}
+  .gallery-scroll .profile-entry{width:100%;height:auto;min-height:72dvh;padding:12vh 9vw;display:flex;justify-content:center;border-left:0;border-top:1px solid var(--line)}
+}
