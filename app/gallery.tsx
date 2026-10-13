@@ -5,7 +5,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 export type InstagramPost = {
   id: string; caption?: string; media_type: 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM';
   media_url: string; thumbnail_url?: string; permalink: string; timestamp: string;
+  location?: { name?: string };
 };
+
+function captionParts(caption = '') {
+  const hashtags = caption.match(/#[\p{L}\p{N}_]+/gu) || [];
+  const description = caption.replace(/#[\p{L}\p{N}_]+/gu, '').replace(/\s+/g, ' ').trim();
+  return { description, hashtags: hashtags.join(' ') };
+}
 
 const demoPosts: InstagramPost[] = [
   ['1', 'Ein stiller Moment, kurz bevor es losgeht.', 'photo-1519741497674-611481863552'],
@@ -77,7 +84,10 @@ export default function Gallery() {
     <section className="gallery-section" id="top" aria-label="Instagram Galerie">
       <div className="gallery-meta"><span>Echte Momente · Scrollen →</span><span>{count} Bilder</span></div>
       <div className="gallery-scroll" ref={galleryRef} tabIndex={0} aria-label="Horizontal scrollbare Bildergalerie">
-        {posts.map((post, index) => <button className="gallery-card" key={post.id} onClick={() => setSelected(post)} aria-label={`Beitrag öffnen: ${post.caption || 'Instagram Beitrag'}`}><img src={post.thumbnail_url || post.media_url} alt={post.caption || 'Hochzeitsmoment fotografiert von Liebs mit Linse'} loading={index > 3 ? 'lazy' : 'eager'} /><span className="card-overlay"><i>{String(index + 1).padStart(2, '0')}</i><b>Ansehen ↗</b></span>{post.media_type !== 'IMAGE' && <span className="media-badge">{post.media_type === 'VIDEO' ? '▶' : '▣'}</span>}</button>)}
+        {posts.map((post, index) => {
+          const { description, hashtags } = captionParts(post.caption);
+          return <button className="gallery-card" key={post.id} onClick={() => setSelected(post)} aria-label={`Beitrag öffnen: ${post.caption || 'Instagram Beitrag'}`}><img src={post.thumbnail_url || post.media_url} alt={post.caption || 'Hochzeitsmoment fotografiert von Liebs mit Linse'} loading={index > 3 ? 'lazy' : 'eager'} /><span className="card-overlay"><span className="post-copy">{post.location?.name && <small>⌖ {post.location.name}</small>}{description && <b>{description}</b>}{hashtags && <i>{hashtags}</i>}</span><strong>{String(index + 1).padStart(2, '0')} ↗</strong></span>{post.media_type !== 'IMAGE' && <span className="media-badge">{post.media_type === 'VIDEO' ? '▶' : '▣'}</span>}</button>;
+        })}
         <footer className="about-footer">
           <div className="about-kicker">Hinter der Linse</div>
           <div className="about-grid"><h1>Wir sind<br /><em>Katharina & Jonas.</em></h1><div className="about-copy"><p>Wir fotografieren die lauten, leisen und vollkommen ungeplanten Augenblicke eures Tages – authentisch, nah und mit viel Liebe fürs Dazwischen.</p><div className="location"><span>Zu Hause in</span><strong>Reutlingen · Tübingen<br />Sigmaringen & überall dort,<br />wo ihr Ja sagt.</strong></div></div></div>
