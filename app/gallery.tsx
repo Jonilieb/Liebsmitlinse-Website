@@ -30,6 +30,7 @@ export default function Gallery() {
   const [selected, setSelected] = useState<InstagramPost | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loadState, setLoadState] = useState<'intro' | 'reveal' | 'ready' | 'error'>('intro');
+  const [showGalleryLabel, setShowGalleryLabel] = useState(true);
   const galleryRef = useRef<HTMLDivElement>(null);
   const loadInstagram = useCallback(async () => {
     const startedAt = Date.now();
@@ -90,16 +91,19 @@ export default function Gallery() {
 
     const syncAfterTouch = () => {
       if (!animationFrame) target = current = gallery.scrollLeft;
+      const aboutSection = gallery.querySelector<HTMLElement>('.about-footer');
+      setShowGalleryLabel(!aboutSection || gallery.scrollLeft + gallery.clientWidth <= aboutSection.offsetLeft + 2);
     };
 
     window.addEventListener('wheel', moveSideways, { passive: false });
     gallery.addEventListener('scroll', syncAfterTouch, { passive: true });
+    syncAfterTouch();
     return () => {
       window.removeEventListener('wheel', moveSideways);
       gallery.removeEventListener('scroll', syncAfterTouch);
       cancelAnimationFrame(animationFrame);
     };
-  }, [selected]);
+  }, [selected, loadState]);
   const selectedMedia = selected?.children?.data?.length ? selected.children.data : selected ? [{ id: selected.id, media_type: selected.media_type, media_url: selected.media_url, thumbnail_url: selected.thumbnail_url }] : [];
 
   const moveFullscreen = (direction: number) => {
@@ -121,10 +125,9 @@ export default function Gallery() {
     return () => window.removeEventListener('keydown', navigateWithKeys);
   });
   return <main>
-    <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite"><span>liebs</span><i>mit</i><span>linse.</span></a><div className="header-right"><span className={`sync-state ${loadState === 'ready' || loadState === 'reveal' ? 'is-live' : ''}`}><b /> {loadState === 'ready' || loadState === 'reveal' ? 'Live von Instagram' : loadState === 'intro' ? 'Instagram wird geladen' : 'Verbindung unterbrochen'}</span><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a></div></header>
+    <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite"><span>liebs</span><i>mit</i><span>linse.</span></a><span className={`header-gallery-label ${showGalleryLabel && loadState === 'ready' ? 'is-visible' : ''}`}>Echte liebsmitlinse-Momente · Scrollen.</span><div className="header-right"><span className={`sync-state ${loadState === 'ready' || loadState === 'reveal' ? 'is-live' : ''}`}><b /> {loadState === 'ready' || loadState === 'reveal' ? 'Live von Instagram' : loadState === 'intro' ? 'Instagram wird geladen' : 'Verbindung unterbrochen'}</span><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a></div></header>
     <section className="gallery-section" id="top" aria-label="Instagram Galerie">
       {(loadState === 'intro' || loadState === 'reveal') && <div className={`gallery-intro ${loadState === 'reveal' ? 'is-revealing' : ''}`} role="status" aria-live="polite"><p>Weil wichtige Momente<br /><em>es wert sind, festgehalten<br />zu werden.</em></p></div>}
-      <div className="gallery-meta"><span>{loadState === 'ready' ? 'Echte Momente · Scrollen →' : 'Echte Momente'}</span></div>
       <div className="gallery-scroll" ref={galleryRef} tabIndex={0} aria-label="Horizontal scrollbare Bildergalerie">
         {loadState === 'error' && <div className="gallery-loading gallery-error" role="alert"><p>Die Galerie konnte gerade nicht geladen werden.</p><button onClick={loadInstagram}>Erneut versuchen</button></div>}
         {posts.map((post, index) => {

@@ -82,4 +82,6 @@ body{font-family:Arial,Helvetica,sans-serif}
 /* Compact navigation while preserving the full remaining gallery height. */
 .site-header{height:72px}
 .gallery-section{height:calc(100dvh - 72px)}
-@media(max-width:760px){.site-header{height:62px}.gallery-section{height:calc(100dvh - 62px)}}
+.header-gallery-label{position:absolute;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.15em;text-transform:uppercase;white-space:nowrap;opacity:0;transition:opacity .35s ease}
+.header-gallery-label.is-visible{opacity:1}
+@media(max-width:760px){.site-header{height:62px}.gallery-section{height:calc(100dvh - 62px)}.header-gallery-label{display:none}}
