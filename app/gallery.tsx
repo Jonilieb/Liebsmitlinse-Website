@@ -83,10 +83,38 @@ export default function Gallery() {
   const count = useMemo(() => String(posts.length).padStart(2, '0'), [posts.length]);
   const selectedMedia = selected?.children?.data?.length ? selected.children.data : selected ? [{ id: selected.id, media_type: selected.media_type, media_url: selected.media_url, thumbnail_url: selected.thumbnail_url }] : [];
   const activeMedia = selectedMedia[selectedIndex];
+  const allMedia = useMemo(() => posts.flatMap((post) => {
+    const media = post.children?.data?.length ? post.children.data : [{ id: post.id, media_type: post.media_type, media_url: post.media_url, thumbnail_url: post.thumbnail_url }];
+    return media.map((item, childIndex) => ({ post, item, childIndex }));
+  }), [posts]);
+  const activeGlobalIndex = selected && activeMedia ? allMedia.findIndex(({ post, childIndex }) => post.id === selected.id && childIndex === selectedIndex) : -1;
+
+  const moveFullscreen = (direction: number) => {
+    if (!allMedia.length) return;
+    const nextIndex = (Math.max(activeGlobalIndex, 0) + direction + allMedia.length) % allMedia.length;
+    setSelected(allMedia[nextIndex].post);
+    setSelectedIndex(allMedia[nextIndex].childIndex);
+  };
+
+  const moveGallery = (direction: number) => galleryRef.current?.scrollBy({ left: direction * window.innerWidth * 0.72, behavior: 'smooth' });
+
+  useEffect(() => {
+    const navigateWithKeys = (event: KeyboardEvent) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      if (selected) moveFullscreen(direction);
+      else moveGallery(direction);
+    };
+    window.addEventListener('keydown', navigateWithKeys);
+    return () => window.removeEventListener('keydown', navigateWithKeys);
+  });
   return <main>
     <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite"><span>liebs</span><i>mit</i><span>linse.</span></a><div className="header-right"><span className={`sync-state ${live ? 'is-live' : ''}`}><b /> {live ? 'Live von Instagram' : 'Galerie-Vorschau'}</span><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a></div></header>
     <section className="gallery-section" id="top" aria-label="Instagram Galerie">
       <div className="gallery-meta"><span>Echte Momente · Scrollen →</span><span>{count} Bilder</span></div>
+      <button className="gallery-arrow main-previous" onClick={() => moveGallery(-1)} aria-label="Galerie nach links">‹</button>
+      <button className="gallery-arrow main-next" onClick={() => moveGallery(1)} aria-label="Galerie nach rechts">›</button>
       <div className="gallery-scroll" ref={galleryRef} tabIndex={0} aria-label="Horizontal scrollbare Bildergalerie">
         {posts.map((post, index) => {
           const { description } = captionParts(post.caption);
@@ -101,7 +129,7 @@ export default function Gallery() {
     </section>
     {selected && activeMedia && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Bild in Vollansicht" onClick={() => setSelected(null)}>
       {activeMedia.media_type === 'VIDEO' ? <video className="fullscreen-media" src={activeMedia.media_url} poster={activeMedia.thumbnail_url} autoPlay loop muted playsInline /> : <img className="fullscreen-media" src={activeMedia.media_url} alt="Hochzeitsfotografie in Vollansicht" />}
-      {selectedMedia.length > 1 && <><button className="carousel-nav previous" onClick={(event) => { event.stopPropagation(); setSelectedIndex((selectedIndex - 1 + selectedMedia.length) % selectedMedia.length); }} aria-label="Vorheriges Bild">‹</button><button className="carousel-nav next" onClick={(event) => { event.stopPropagation(); setSelectedIndex((selectedIndex + 1) % selectedMedia.length); }} aria-label="Nächstes Bild">›</button><span className="carousel-count">{selectedIndex + 1} / {selectedMedia.length}</span></>}
+      {allMedia.length > 1 && <><button className="carousel-nav previous" onClick={(event) => { event.stopPropagation(); moveFullscreen(-1); }} aria-label="Vorheriges Bild">‹</button><button className="carousel-nav next" onClick={(event) => { event.stopPropagation(); moveFullscreen(1); }} aria-label="Nächstes Bild">›</button><span className="carousel-count">{activeGlobalIndex + 1} / {allMedia.length}</span></>}
       <span className="close-hint">Klicken zum Schließen</span>
     </div>}
   </main>;
