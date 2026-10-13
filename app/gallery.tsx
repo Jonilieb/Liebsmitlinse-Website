@@ -31,18 +31,26 @@ export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loadState, setLoadState] = useState<'loading' | 'ready' | 'error'>('loading');
   const galleryRef = useRef<HTMLDivElement>(null);
-  const loadInstagram = useCallback(() => {
+  const loadInstagram = useCallback(async () => {
+    const startedAt = Date.now();
+    const finishMinimumLoadingTime = () => new Promise<void>((resolve) => {
+      window.setTimeout(resolve, Math.max(0, 1400 - (Date.now() - startedAt)));
+    });
     setLoadState('loading');
-    fetch('/api/instagram')
-      .then((response) => response.ok ? response.json() as Promise<unknown> : Promise.reject())
-      .then((result) => {
-        if (typeof result !== 'object' || result === null || !('data' in result)) throw new Error('Invalid response');
-        const apiPosts = Array.isArray(result.data) ? result.data.filter(isInstagramPost) : [];
-        if (!apiPosts.length) throw new Error('No posts');
-        setPosts(apiPosts);
-        setLoadState('ready');
-      })
-      .catch(() => setLoadState('error'));
+    try {
+      const response = await fetch('/api/instagram');
+      if (!response.ok) throw new Error('Request failed');
+      const result: unknown = await response.json();
+      if (typeof result !== 'object' || result === null || !('data' in result)) throw new Error('Invalid response');
+      const apiPosts = Array.isArray(result.data) ? result.data.filter(isInstagramPost) : [];
+      if (!apiPosts.length) throw new Error('No posts');
+      await finishMinimumLoadingTime();
+      setPosts(apiPosts);
+      setLoadState('ready');
+    } catch {
+      await finishMinimumLoadingTime();
+      setLoadState('error');
+    }
   }, []);
   useEffect(() => { loadInstagram(); }, [loadInstagram]);
   useEffect(() => { if (!selected) return; const close = (event: KeyboardEvent) => event.key === 'Escape' && setSelected(null); window.addEventListener('keydown', close); document.body.style.overflow = 'hidden'; return () => { window.removeEventListener('keydown', close); document.body.style.overflow = ''; }; }, [selected]);
@@ -122,7 +130,7 @@ export default function Gallery() {
         {loadState === 'error' && <div className="gallery-loading gallery-error" role="alert"><p>Die Galerie konnte gerade nicht geladen werden.</p><button onClick={loadInstagram}>Erneut versuchen</button></div>}
         {posts.map((post, index) => {
           const { description } = captionParts(post.caption);
-          return <button className="gallery-card" key={post.id} onClick={() => { setSelected(post); setSelectedIndex(0); }} aria-label={`Beitrag öffnen: ${post.caption || 'Instagram Beitrag'}`}><img src={post.thumbnail_url || post.media_url} alt={post.caption || 'Hochzeitsmoment fotografiert von Liebs mit Linse'} loading={index > 3 ? 'lazy' : 'eager'} /><span className="card-overlay"><span className="post-copy">{post.location?.name && <small>⌖ {post.location.name}</small>}{description && <b>{description}</b>}</span><strong>{String(index + 1).padStart(2, '0')} ↗</strong></span>{post.media_type === 'VIDEO' && <span className="media-badge video-badge" aria-hidden="true">▶</span>}{post.media_type === 'CAROUSEL_ALBUM' && <span className="media-badge carousel-badge" aria-hidden="true" />}</button>;
+          return <button className="gallery-card" style={{ animationDelay: `${Math.min(index * 55, 440)}ms` }} key={post.id} onClick={() => { setSelected(post); setSelectedIndex(0); }} aria-label={`Beitrag öffnen: ${post.caption || 'Instagram Beitrag'}`}><img src={post.thumbnail_url || post.media_url} alt={post.caption || 'Hochzeitsmoment fotografiert von Liebs mit Linse'} loading={index > 3 ? 'lazy' : 'eager'} /><span className="card-overlay"><span className="post-copy">{post.location?.name && <small>⌖ {post.location.name}</small>}{description && <b>{description}</b>}</span><strong>{String(index + 1).padStart(2, '0')} ↗</strong></span>{post.media_type === 'VIDEO' && <span className="media-badge video-badge" aria-hidden="true">▶</span>}{post.media_type === 'CAROUSEL_ALBUM' && <span className="media-badge carousel-badge" aria-hidden="true" />}</button>;
         })}
         {loadState === 'ready' && <footer className="about-footer">
           <div className="about-kicker">Hinter der Linse</div>

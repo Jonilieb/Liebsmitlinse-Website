@@ -30,9 +30,10 @@ body{overflow:hidden}
 .loading-mark::after{content:"";position:absolute;inset:0;background:#f3f0e8;transform:translateX(-100%);animation:gallery-loading 1.25s ease-in-out infinite}
 .gallery-error button{border:0;border-bottom:1px solid rgba(243,240,232,.65);padding:4px 0;background:transparent;color:inherit;font-size:9px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
 @keyframes gallery-loading{50%{transform:translateX(0)}100%{transform:translateX(100%)}}
-.gallery-scroll .gallery-card{flex:0 0 auto;display:block;height:100%;width:auto;aspect-ratio:auto;grid-column:auto;border-right:1px solid #20231f}
+.gallery-scroll .gallery-card{flex:0 0 auto;display:block;height:100%;width:auto;aspect-ratio:auto;grid-column:auto;border-right:1px solid #20231f;animation:gallery-reveal .8s cubic-bezier(.22,.75,.22,1) both}
 .gallery-scroll .gallery-card img{display:block;height:100%;width:auto;max-width:none;object-fit:contain}
-.gallery-scroll .about-footer{flex:0 0 100vw;width:100vw;height:100%;min-height:0;overflow:auto;background:var(--cream);color:var(--ink)}
+.gallery-scroll .about-footer{flex:0 0 100vw;width:100vw;height:100%;min-height:0;overflow:auto;background:var(--cream);color:var(--ink);animation:gallery-reveal .8s .45s cubic-bezier(.22,.75,.22,1) both}
+@keyframes gallery-reveal{from{opacity:0;transform:translate3d(18px,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 .media-badge{background:transparent;padding:0;text-shadow:0 1px 7px rgba(0,0,0,.6)}
 .video-badge{font-size:13px;color:#fff}
 .carousel-badge{width:19px;height:19px;top:17px;right:17px}
@@ -70,3 +71,4 @@ body{font-family:Arial,Helvetica,sans-serif}
 .carousel-count{left:50%;bottom:20px;transform:translateX(-50%)}
 .close-hint{right:22px;top:20px}
 @media(max-width:760px){.gallery-arrow{width:34px;height:34px;margin-top:-17px;font-size:22px}.gallery-arrow.main-previous{left:9px}.gallery-arrow.main-next{right:9px}.carousel-nav{width:36px;height:36px;margin-top:-18px;font-size:24px}.carousel-nav.previous{left:10px}.carousel-nav.next{right:10px}.close-hint{display:none}}
+@media(prefers-reduced-motion:reduce){.gallery-scroll .gallery-card,.gallery-scroll .about-footer{animation:none}.loading-mark::after{animation-duration:2.4s}}
