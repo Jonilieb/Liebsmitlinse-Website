@@ -4,6 +4,10 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'Liebs mit Linse — Hochzeitsfotografie',
   description: 'Authentische Hochzeitsfotografie von Katharina & Jonas in Reutlingen, Tübingen und Sigmaringen.',
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    shortcut: '/favicon.svg',
+  },
   openGraph: {
     title: 'Liebs mit Linse — Hochzeitsfotografie',
     description: 'Echte Momente. Für immer festgehalten.',
