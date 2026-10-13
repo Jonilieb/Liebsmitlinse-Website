@@ -31,10 +31,10 @@ body{overflow:hidden}
 .gallery-meta{position:absolute;z-index:4;left:22px;right:22px;top:18px;margin:0;padding:0;border:0;pointer-events:none;text-shadow:0 1px 14px rgba(0,0,0,.55)}
 .gallery-scroll{height:100%;display:flex;align-items:stretch;gap:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;outline:none}
 .gallery-scroll::-webkit-scrollbar{display:none}
-.gallery-intro{position:absolute;inset:0;z-index:8;display:flex;align-items:center;padding:5vw 7vw;color:#f3f0e8;pointer-events:none;overflow:hidden}
-.gallery-intro::before{content:"";position:absolute;inset:0;background:#20231f;z-index:-1}
+.gallery-intro{position:absolute;inset:0;z-index:8;display:flex;align-items:center;padding:5vw 7vw;color:#fff;pointer-events:none;overflow:hidden}
+.gallery-intro::before{content:"";position:absolute;inset:0;background:#181818;z-index:-1}
 .gallery-intro p{margin:0;font:normal clamp(52px,7.3vw,118px)/.95 Georgia,'Times New Roman',serif;letter-spacing:-.055em}
-.gallery-intro p em{font-weight:400;color:#b7b9ad}
+.gallery-intro p em{font-weight:400;color:#fff}
 .gallery-intro.is-revealing::before{animation:intro-background-out .8s cubic-bezier(.4,0,.2,1) forwards}
 .gallery-intro.is-revealing p{animation:intro-copy-out .6s 1.55s ease forwards;text-shadow:0 2px 22px rgba(0,0,0,.5)}
 @keyframes intro-background-out{to{opacity:0}}
