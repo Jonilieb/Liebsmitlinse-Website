@@ -219,7 +219,7 @@ export default function Gallery() {
     return () => window.removeEventListener('keydown', navigateWithKeys);
   });
   return <main>
-    <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite">liebsmitlinse</a><div className="header-right"><a className="instagram-link whatsapp-link" href="https://wa.me/4917588750135" target="_blank" rel="noreferrer">Schreibe uns auf WhatsApp <ArrowUpRight className="external-arrow" /></a><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <ArrowUpRight className="external-arrow" /></a></div></header>
+    <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite">liebsmitlinse</a><div className="header-right"><a className="instagram-link whatsapp-link" href="https://wa.me/4915788750135" target="_blank" rel="noreferrer">Schreibe uns auf WhatsApp <ArrowUpRight className="external-arrow" /></a><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <ArrowUpRight className="external-arrow" /></a></div></header>
     <section className="gallery-section" id="top" aria-label="Instagram Galerie">
       {(loadState === 'intro' || loadState === 'reveal') && <div className={`gallery-intro ${loadState === 'reveal' ? 'is-revealing' : ''}`} role="status" aria-live="polite"><p>Weil wichtige Momente<br /><em>es wert sind, festgehalten<br />zu werden.</em></p></div>}
       <div className={`gallery-meta ${showGalleryLabel && loadState === 'ready' ? 'is-visible' : ''}`}><span>Echte liebsmitlinse-Momente <i className="scroll-nudge" aria-hidden="true">→</i></span></div>
@@ -236,7 +236,7 @@ export default function Gallery() {
               <section className="profile-entry"><span>Was wir tun</span><p>Wir fotografieren die lauten, leisen und vollkommen ungeplanten Augenblicke eures Tages – authentisch, nah und mit viel Liebe fürs Dazwischen.</p></section>
               <section className="profile-entry"><span>Das zeichnet uns aus</span><p>Wir sind ein Team. Bei uns bekommt ihr nicht nur einen Lieb, sondern gleich zwei. So bringt jeder von uns seine eigenen Stärken ein – und gemeinsam machen wir euer Shooting zu einem reibungslosen, entspannten Erlebnis.</p></section>
               <section className="profile-entry profile-location"><span>Zuhause in</span><strong>Irgendwo zwischen Reutlingen, Tübingen, Sigmaringen &amp; überall dort, wo ihr Ja sagt.</strong></section>
-              <section className="profile-entry"><span>Kontakt</span><address className="contact-details">Liebsmitlinse<br />Katharina &amp; Jonas Lieb<br />Stuttgarter Str. 35<br />72666 Neckartailfingen<br /><a href="mailto:jonas_wurster@gmx.net">jonas_wurster@gmx.net</a><br /><a href="tel:+4917588750135">+49 175 88750135</a></address></section>
+              <section className="profile-entry"><span>Kontakt</span><address className="contact-details">Liebsmitlinse<br />Katharina &amp; Jonas Lieb<br />Stuttgarter Str. 35<br />72666 Neckartailfingen<br /><a href="mailto:jonas_wurster@gmx.net">jonas_wurster@gmx.net</a><br /><a href="tel:+4915788750135">+49 157 88750135</a></address></section>
             </div>
           </div>
         </footer>}
