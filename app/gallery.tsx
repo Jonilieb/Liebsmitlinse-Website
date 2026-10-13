@@ -137,14 +137,14 @@ export default function Gallery() {
         })}
         {(loadState === 'ready' || loadState === 'reveal') && <footer className="about-footer">
           <div className="about-grid">
-            <div className="about-identity"><h1><span>Wir sind</span><small className="identity-kicker">Hinter der Linse</small><em>Katharina &<br />Jonas Lieb.</em></h1><img src="/katharina-jonas-lieb.jpg" alt="Katharina und Jonas Lieb" /></div>
+            <div className="about-identity"><h1><small className="identity-kicker">Hinter der Linse</small><em>Katharina &<br />Jonas Lieb.</em></h1><img src="/katharina-jonas-lieb.jpg" alt="Katharina und Jonas Lieb" /></div>
             <div className="about-profile">
               <section className="profile-entry"><span>Was wir tun</span><p>Wir fotografieren die lauten, leisen und vollkommen ungeplanten Augenblicke eures Tages – authentisch, nah und mit viel Liebe fürs Dazwischen.</p></section>
               <section className="profile-entry"><span>Das zeichnet uns aus</span><p>Wir sind ein Team. Bei uns bekommt ihr nicht nur einen Lieb, sondern gleich zwei. So bringt jeder von uns seine eigenen Stärken ein – und gemeinsam machen wir euer Shooting zu einem reibungslosen, entspannten Erlebnis.</p></section>
               <section className="profile-entry profile-location"><span>Zuhause in</span><strong>Reutlingen · Tübingen<br />Sigmaringen & überall dort,<br />wo ihr Ja sagt.</strong></section>
+              <section className="profile-entry"><span>Kontakt</span><address className="contact-details">Liebsmitlinse<br />Katharina &amp; Jonas Lieb<br />Stuttgarter Str. 35<br />72666 Neckartailfingen<br /><a href="mailto:jonas_wurster@gmx.net">jonas_wurster@gmx.net</a><br /><a href="tel:+4915788750135">+49 15788750135</a></address></section>
             </div>
           </div>
-          <div className="footer-bottom"><span className="footer-script">liebs mit linse.</span><address className="imprint"><b>Impressum</b><span>Liebsmitlinse<br />Katharina &amp; Jonas Lieb<br />Stuttgarter Str. 35<br />72666 Neckartailfingen</span><a href="mailto:jonas_wurster@gmx.net">jonas_wurster@gmx.net</a><a href="tel:+4915788750135">+49 15788750135</a></address></div>
         </footer>}
       </div>
     </section>
