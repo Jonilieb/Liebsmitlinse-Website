@@ -16,14 +16,14 @@
 .profile-entry{display:grid;grid-template-columns:125px minmax(0,1fr);gap:24px;padding:22px 0;border-bottom:1px solid var(--line)}
 .profile-entry span{font-size:9px;line-height:1.45;letter-spacing:.14em;text-transform:uppercase;padding-top:4px}
 .profile-entry p,.profile-entry strong{margin:0;font:17px/1.48 Georgia,serif;font-weight:400;color:#62675b}
-.profile-location strong{color:var(--ink)}
+.profile-location strong{color:#62675b}
 .contact-details{font-style:normal;font:17px/1.42 Georgia,'Times New Roman',serif;color:#62675b}
 .contact-details a{font:inherit;text-transform:none;letter-spacing:0;border:0;padding:0}
 .footer-bottom{border-top:1px solid var(--line);padding-top:28px;display:flex;justify-content:space-between;align-items:flex-end}
 .about-footer .footer-script{font:italic clamp(38px,6vw,80px) Georgia,serif;letter-spacing:-.05em}
 .about-footer a{font-size:11px;text-transform:uppercase;letter-spacing:.12em;text-decoration:none;border-bottom:1px solid;padding-bottom:5px}
 
-@media(max-width:760px){.about-footer{padding:60px 20px 24px;min-height:auto}.about-grid{grid-template-columns:1fr;padding:55px 0 70px;gap:50px}.about-grid h1{font-size:clamp(48px,14vw,72px);line-height:.92}.about-grid h1 em{white-space:normal}.about-copy>p{font-size:19px;margin-bottom:45px}.location{grid-template-columns:80px 1fr}.location strong{font-size:16px}.profile-entry{grid-template-columns:1fr;gap:12px;padding:20px 0}.profile-entry p,.profile-entry strong{font-size:16px}.footer-bottom{align-items:flex-end}}
+@media(max-width:760px){.about-footer{padding:60px 20px 24px;min-height:auto}.about-grid{grid-template-columns:1fr;padding:55px 0 70px;gap:50px}.about-grid h1{font-size:clamp(48px,14vw,72px);line-height:.92}.about-grid h1 em{white-space:normal}.about-copy>p{font-size:19px;margin-bottom:45px}.location{grid-template-columns:80px 1fr}.location strong{font-size:16px}.profile-entry{grid-template-columns:1fr;gap:12px;padding:20px 0}.profile-entry p,.profile-entry strong,.profile-entry .contact-details{font-size:16px}.footer-bottom{align-items:flex-end}}
 
 /* Full-height horizontal portfolio */
 body{overflow:hidden}
@@ -108,7 +108,7 @@ body{font-family:Arial,Helvetica,sans-serif}
   .gallery-scroll .about-profile{height:100%;display:grid;grid-template-rows:repeat(4,minmax(0,1fr))}
   .gallery-scroll .profile-entry{align-content:center}
   .gallery-scroll .profile-entry{grid-template-columns:135px minmax(0,1fr);gap:24px;padding:clamp(12px,1.7vh,20px) 0}
-  .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong{font-size:clamp(14px,1.05vw,17px);line-height:1.42}
+  .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong,.gallery-scroll .profile-entry .contact-details{font-size:clamp(14px,1.05vw,17px);line-height:1.42}
   .gallery-scroll .footer-bottom{padding-top:clamp(14px,2vh,24px)}
   .gallery-scroll .about-footer .footer-script{font-size:clamp(32px,4vw,58px)}
 }
@@ -116,7 +116,7 @@ body{font-family:Arial,Helvetica,sans-serif}
   .gallery-scroll .about-grid{padding:16px 0}
   .gallery-scroll .about-grid h1{font-size:clamp(62px,6.7vw,104px)}
   .gallery-scroll .profile-entry{padding:10px 0}
-  .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong{font-size:14px;line-height:1.35}
+  .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong,.gallery-scroll .profile-entry .contact-details{font-size:14px;line-height:1.35}
 }
 @media(max-width:760px){.about-identity{display:grid;grid-template-columns:1fr;gap:24px}.about-identity img{display:block;width:min(78%,340px);height:auto;margin:0 auto}}
 @media(max-width:760px){.footer-bottom{gap:32px;flex-wrap:wrap}}
@@ -126,3 +126,4 @@ body{font-family:Arial,Helvetica,sans-serif}
 .identity-photo-label{display:block;margin-bottom:14px;font:9px/1.2 Arial,Helvetica,sans-serif;letter-spacing:.16em;text-transform:uppercase}
 .about-identity h1>span{color:var(--ink)}
 .about-identity h1 em{color:var(--ink)}
+.about-footer .contact-details,.about-footer .contact-details a{font-family:Georgia,'Times New Roman',serif;font-weight:400;color:#62675b;text-transform:none;letter-spacing:0;text-decoration:none;border:0;padding:0}
