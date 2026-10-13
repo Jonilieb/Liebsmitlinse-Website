@@ -137,7 +137,14 @@ export default function Gallery() {
         })}
         {(loadState === 'ready' || loadState === 'reveal') && <footer className="about-footer">
           <div className="about-kicker">Hinter der Linse</div>
-          <div className="about-grid"><h1>Wir sind<br /><em>Katharina & Jonas.</em></h1><div className="about-copy"><p>Wir fotografieren die lauten, leisen und vollkommen ungeplanten Augenblicke eures Tages – authentisch, nah und mit viel Liebe fürs Dazwischen.</p><div className="location"><span>Zu Hause in</span><strong>Reutlingen · Tübingen<br />Sigmaringen & überall dort,<br />wo ihr Ja sagt.</strong></div></div></div>
+          <div className="about-grid">
+            <h1>Wir sind<br /><em>Katharina &<br />Jonas Lieb.</em></h1>
+            <div className="about-profile">
+              <section className="profile-entry"><span>Was wir tun</span><p>Wir fotografieren die lauten, leisen und vollkommen ungeplanten Augenblicke eures Tages – authentisch, nah und mit viel Liebe fürs Dazwischen.</p></section>
+              <section className="profile-entry"><span>Das zeichnet uns aus</span><p>Wir sind ein Team. Bei uns bekommt ihr nicht nur einen Lieb, sondern gleich zwei. So bringt jeder von uns seine eigenen Stärken ein – und gemeinsam machen wir euer Shooting zu einem reibungslosen, entspannten Erlebnis.</p></section>
+              <section className="profile-entry profile-location"><span>Zuhause in</span><strong>Reutlingen · Tübingen<br />Sigmaringen & überall dort,<br />wo ihr Ja sagt.</strong></section>
+            </div>
+          </div>
           <div className="footer-bottom"><span className="footer-script">liebs mit linse.</span><a href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">@liebsmitlinse ↗</a></div>
         </footer>}
       </div>
