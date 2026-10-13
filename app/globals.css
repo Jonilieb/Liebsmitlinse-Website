@@ -136,10 +136,24 @@ body{font-family:Arial,Helvetica,sans-serif}
 .card-overlay>strong{display:inline-flex;align-items:center;gap:4px}
 .post-arrow{width:11px;height:11px}
 .lightbox{touch-action:none}
-@media(max-width:760px){.gallery-scroll{touch-action:pan-x}.gallery-scroll .about-footer{touch-action:pan-y;overscroll-behavior-y:contain}.external-arrow{width:11px;height:11px}}
+@media(max-width:760px){.gallery-scroll{touch-action:pan-x}.external-arrow{width:11px;height:11px}}
 
 /* Stronger mobile typography for the intro and photographer signature. */
 @media(max-width:760px){
   .gallery-intro p{font-size:clamp(50px,14.5vw,82px);line-height:.94}
   .gallery-scroll .about-grid h1{font-size:clamp(58px,17vw,94px);line-height:.88}
+}
+
+/* Continue the mobile story horizontally through the complete profile. */
+@media(max-width:760px){
+  .gallery-scroll .about-footer{flex:0 0 auto;width:auto;height:100%;padding:0;overflow:visible;touch-action:pan-x}
+  .gallery-scroll .about-grid{display:flex;width:max-content;height:100%;padding:0;gap:0;align-items:stretch}
+  .gallery-scroll .about-identity{flex:0 0 92vw;width:92vw;height:100%;padding:32px 7vw 24px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"label" "photo" "title";gap:16px;background:var(--cream)}
+  .gallery-scroll .identity-photo-label{grid-area:label;margin:0;align-self:end}
+  .gallery-scroll .about-identity img{grid-area:photo;width:100%;height:100%;min-height:0;margin:0;object-fit:cover;object-position:center 24%}
+  .gallery-scroll .about-identity h1{grid-area:title;margin:0;align-self:end}
+  .gallery-scroll .about-profile{display:flex;height:100%}
+  .gallery-scroll .profile-entry{flex:0 0 88vw;width:88vw;height:100%;padding:9vh 8vw;display:flex;flex-direction:column;justify-content:center;gap:24px;border-left:1px solid var(--line)}
+  .gallery-scroll .profile-entry>span{padding:0}
+  .gallery-scroll .profile-entry p,.gallery-scroll .profile-entry strong,.gallery-scroll .profile-entry .contact-details{font-size:clamp(22px,6.4vw,30px);line-height:1.35}
 }

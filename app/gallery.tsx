@@ -75,7 +75,6 @@ export default function Gallery() {
     let touchLastTime = 0;
     let touchVelocity = 0;
     let inertiaFrame = 0;
-    let touchInAboutSection = false;
 
     const animate = () => {
       current += (target - current) * 0.22;
@@ -111,8 +110,6 @@ export default function Gallery() {
 
     const startTouchScroll = (event: TouchEvent) => {
       if (selected || event.touches.length !== 1) return;
-      touchInAboutSection = event.target instanceof Element && Boolean(event.target.closest('.about-footer'));
-      if (touchInAboutSection) return;
       cancelAnimationFrame(inertiaFrame);
       inertiaFrame = 0;
       touchX = event.touches[0].clientX;
@@ -125,7 +122,7 @@ export default function Gallery() {
     };
 
     const moveTouchScroll = (event: TouchEvent) => {
-      if (selected || touchInAboutSection || event.touches.length !== 1) return;
+      if (selected || event.touches.length !== 1) return;
       const deltaX = touchX - event.touches[0].clientX;
       const deltaY = touchY - event.touches[0].clientY;
       if (!touchDirection && Math.max(Math.abs(deltaX), Math.abs(deltaY)) > 5) {
@@ -144,10 +141,6 @@ export default function Gallery() {
     };
 
     const endTouchScroll = () => {
-      if (touchInAboutSection) {
-        touchInAboutSection = false;
-        return;
-      }
       if (touchDirection !== 'vertical' || Math.abs(touchVelocity) < 0.04) return;
       let velocity = touchVelocity * 18;
       const glide = () => {
