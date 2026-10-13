@@ -30,13 +30,14 @@ export default function Gallery() {
     const gallery = galleryRef.current;
     if (!gallery) return;
     const moveSideways = (event: WheelEvent) => {
-      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+      if (event.deltaY === 0 || selected) return;
       event.preventDefault();
-      gallery.scrollLeft += event.deltaY;
+      const multiplier = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 24 : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? window.innerWidth : 1;
+      gallery.scrollLeft += event.deltaY * multiplier;
     };
-    gallery.addEventListener('wheel', moveSideways, { passive: false });
-    return () => gallery.removeEventListener('wheel', moveSideways);
-  }, []);
+    window.addEventListener('wheel', moveSideways, { passive: false });
+    return () => window.removeEventListener('wheel', moveSideways);
+  }, [selected]);
   const count = useMemo(() => String(posts.length).padStart(2, '0'), [posts.length]);
   return <main>
     <header className="site-header"><a className="wordmark" href="#top" aria-label="Liebs mit Linse – Startseite"><span>liebs</span><i>mit</i><span>linse.</span></a><div className="header-right"><span className={`sync-state ${live ? 'is-live' : ''}`}><b /> {live ? 'Live von Instagram' : 'Galerie-Vorschau'}</span><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a></div></header>
