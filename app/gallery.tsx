@@ -34,7 +34,7 @@ export default function Gallery() {
   const loadInstagram = useCallback(async () => {
     const startedAt = Date.now();
     const finishMinimumLoadingTime = () => new Promise<void>((resolve) => {
-      window.setTimeout(resolve, Math.max(0, 1400 - (Date.now() - startedAt)));
+      window.setTimeout(resolve, Math.max(0, 1000 - (Date.now() - startedAt)));
     });
     setLoadState('loading');
     try {
