@@ -9,6 +9,16 @@ export type InstagramPost = {
   children?: { data?: Array<{ id: string; media_type: 'IMAGE' | 'VIDEO'; media_url: string; thumbnail_url?: string }> };
 };
 
+function isInstagramPost(value: unknown): value is InstagramPost {
+  if (typeof value !== 'object' || value === null) return false;
+  const post = value as Record<string, unknown>;
+  return typeof post.id === 'string'
+    && typeof post.media_url === 'string'
+    && typeof post.permalink === 'string'
+    && typeof post.timestamp === 'string'
+    && (post.media_type === 'IMAGE' || post.media_type === 'VIDEO' || post.media_type === 'CAROUSEL_ALBUM');
+}
+
 function captionParts(caption = '') {
   const hashtags = caption.match(/#[\p{L}\p{N}_]+/gu) || [];
   const description = caption.replace(/#[\p{L}\p{N}_]+/gu, '').replace(/\s+/g, ' ').trim();
@@ -33,7 +43,19 @@ export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [live, setLive] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
-  useEffect(() => { fetch('/api/instagram').then((r) => r.ok ? r.json() : Promise.reject()).then((data) => { if (Array.isArray(data.data) && data.data.length) { setPosts(data.data); setLive(true); } }).catch(() => undefined); }, []);
+  useEffect(() => {
+    fetch('/api/instagram')
+      .then((response) => response.ok ? response.json() as Promise<unknown> : Promise.reject())
+      .then((result) => {
+        if (typeof result !== 'object' || result === null || !('data' in result)) return;
+        const apiPosts = Array.isArray(result.data) ? result.data.filter(isInstagramPost) : [];
+        if (apiPosts.length) {
+          setPosts(apiPosts);
+          setLive(true);
+        }
+      })
+      .catch(() => undefined);
+  }, []);
   useEffect(() => { if (!selected) return; const close = (event: KeyboardEvent) => event.key === 'Escape' && setSelected(null); window.addEventListener('keydown', close); document.body.style.overflow = 'hidden'; return () => { window.removeEventListener('keydown', close); document.body.style.overflow = ''; }; }, [selected]);
   useEffect(() => {
     const gallery = galleryRef.current;
