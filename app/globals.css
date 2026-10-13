@@ -124,5 +124,5 @@ body{font-family:Arial,Helvetica,sans-serif}
 /* Editorial profile without divider lines. */
 .about-kicker,.about-profile,.profile-entry,.footer-bottom{border:0}
 .identity-photo-label{display:block;margin-bottom:14px;font:9px/1.2 Arial,Helvetica,sans-serif;letter-spacing:.16em;text-transform:uppercase}
-.about-identity h1>span{color:#8d927e}
+.about-identity h1>span{color:var(--ink)}
 .about-identity h1 em{color:var(--ink)}
