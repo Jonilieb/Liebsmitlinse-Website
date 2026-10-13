@@ -151,7 +151,8 @@ body{font-family:Arial,Helvetica,sans-serif}
   .gallery-scroll .about-identity{flex:0 0 92vw;width:92vw;height:100%;padding:32px 7vw 24px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"label" "photo" "title";gap:16px;background:var(--cream)}
   .gallery-scroll .identity-photo-label{grid-area:label;margin:0;align-self:end}
   .gallery-scroll .about-identity img{grid-area:photo;width:100%;height:100%;min-height:0;margin:0;object-fit:cover;object-position:center 24%}
-  .gallery-scroll .about-identity h1{grid-area:title;margin:0;align-self:end}
+  .gallery-scroll .about-identity h1{grid-area:title;margin:0;align-self:end;width:100%;max-width:100%;font-size:clamp(52px,14vw,72px);line-height:.88;letter-spacing:-.06em;overflow:hidden}
+  .gallery-scroll .about-identity h1>span,.gallery-scroll .about-identity h1>em{display:block;margin:0;white-space:normal}
   .gallery-scroll .about-profile{display:flex;height:100%}
   .gallery-scroll .profile-entry{flex:0 0 88vw;width:88vw;height:100%;padding:9vh 8vw;display:flex;flex-direction:column;justify-content:center;gap:24px;border-left:1px solid var(--line)}
   .gallery-scroll .profile-entry>span{padding:0}
