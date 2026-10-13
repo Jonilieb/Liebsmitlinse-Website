@@ -38,3 +38,13 @@ body{overflow:hidden}
 .gallery-scroll .card-overlay>strong{font:italic 13px Georgia,serif;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.65)}
 
 @media(max-width:760px){body{overflow:hidden}.gallery-section{height:calc(100dvh - 72px);padding:0}.gallery-meta{top:14px;left:14px;right:14px}.gallery-scroll .gallery-card{height:100%;grid-column:auto;aspect-ratio:auto}.gallery-scroll .about-footer{padding:44px 20px 22px}.gallery-scroll .about-grid{padding:42px 0 48px;gap:28px}.gallery-scroll .about-copy>p{font-size:17px;margin-bottom:28px}.gallery-scroll .card-overlay{display:flex;opacity:0;padding:14px}.gallery-scroll .gallery-card:focus-visible .card-overlay{opacity:1}.post-copy{max-width:82%;padding:12px 13px}.post-copy b{font-size:14px}}
+
+/* Distraction-free fullscreen viewer */
+.lightbox{padding:0;background:rgba(18,20,18,.94);cursor:zoom-out;overflow:hidden}
+.fullscreen-media{display:block;width:100vw;height:100dvh;object-fit:contain;user-select:none}
+.carousel-nav{position:fixed;z-index:2;top:50%;width:52px;height:70px;margin-top:-35px;border:0;background:rgba(243,240,232,.88);color:var(--ink);font:42px/1 Georgia,serif;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(8px)}
+.carousel-nav.previous{left:18px}.carousel-nav.next{right:18px}
+.carousel-count,.close-hint{position:fixed;z-index:2;color:#fff;font-size:9px;letter-spacing:.14em;text-transform:uppercase;text-shadow:0 1px 8px #000}
+.carousel-count{left:50%;bottom:20px;transform:translateX(-50%)}
+.close-hint{right:22px;top:20px}
+@media(max-width:760px){.carousel-nav{width:42px;height:58px;margin-top:-29px;font-size:34px}.carousel-nav.previous{left:8px}.carousel-nav.next{right:8px}.close-hint{display:none}}

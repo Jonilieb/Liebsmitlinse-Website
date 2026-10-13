@@ -1,4 +1,4 @@
-const FIELDS = 'id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username';
+const FIELDS = 'id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username,children{id,media_type,media_url,thumbnail_url}';
 
 type InstagramResponse = {
   data?: unknown[];
