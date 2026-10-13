@@ -136,9 +136,8 @@ export default function Gallery() {
           return <button className="gallery-card" style={{ animationDelay: `${Math.min(index * 55, 440)}ms` }} key={post.id} onClick={() => { setSelected(post); setSelectedIndex(0); }} aria-label={`Beitrag öffnen: ${post.caption || 'Instagram Beitrag'}`}><img src={post.thumbnail_url || post.media_url} alt={post.caption || 'Hochzeitsmoment fotografiert von Liebs mit Linse'} loading={index > 3 ? 'lazy' : 'eager'} /><span className="card-overlay"><span className="post-copy">{post.location?.name && <small>⌖ {post.location.name}</small>}{description && <b>{description}</b>}</span><strong>{String(index + 1).padStart(2, '0')} ↗</strong></span>{post.media_type === 'VIDEO' && <span className="media-badge video-badge" aria-hidden="true">▶</span>}{post.media_type === 'CAROUSEL_ALBUM' && <span className="media-badge carousel-badge" aria-hidden="true" />}</button>;
         })}
         {(loadState === 'ready' || loadState === 'reveal') && <footer className="about-footer">
-          <div className="about-kicker">Hinter der Linse</div>
           <div className="about-grid">
-            <div className="about-identity"><h1>Wir sind<br /><em>Katharina &<br />Jonas Lieb.</em></h1><img src="/katharina-jonas-lieb.jpg" alt="Katharina und Jonas Lieb" /></div>
+            <div className="about-identity"><h1><span>Wir sind</span><small className="identity-kicker">Hinter der Linse</small><em>Katharina &<br />Jonas Lieb.</em></h1><img src="/katharina-jonas-lieb.jpg" alt="Katharina und Jonas Lieb" /></div>
             <div className="about-profile">
               <section className="profile-entry"><span>Was wir tun</span><p>Wir fotografieren die lauten, leisen und vollkommen ungeplanten Augenblicke eures Tages – authentisch, nah und mit viel Liebe fürs Dazwischen.</p></section>
               <section className="profile-entry"><span>Das zeichnet uns aus</span><p>Wir sind ein Team. Bei uns bekommt ihr nicht nur einen Lieb, sondern gleich zwei. So bringt jeder von uns seine eigenen Stärken ein – und gemeinsam machen wir euer Shooting zu einem reibungslosen, entspannten Erlebnis.</p></section>
