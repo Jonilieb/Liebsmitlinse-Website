@@ -47,7 +47,7 @@ export default function Gallery() {
       await finishMinimumLoadingTime();
       setPosts(apiPosts);
       setLoadState('reveal');
-      window.setTimeout(() => setLoadState('ready'), 1500);
+      window.setTimeout(() => setLoadState('ready'), 2300);
     } catch {
       await finishMinimumLoadingTime();
       setLoadState('error');
