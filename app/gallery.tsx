@@ -132,23 +132,23 @@ export default function Gallery() {
       event.preventDefault();
       const now = performance.now();
       const elapsed = Math.max(1, now - touchLastTime);
-      const instantVelocity = ((touchLastY - event.touches[0].clientY) * 0.72) / elapsed;
+      const instantVelocity = ((touchLastY - event.touches[0].clientY) * 0.84) / elapsed;
       touchVelocity = touchVelocity * 0.68 + instantVelocity * 0.32;
       touchLastY = event.touches[0].clientY;
       touchLastTime = now;
-      gallery.scrollLeft = touchScrollLeft + deltaY * 0.72;
+      gallery.scrollLeft = touchScrollLeft + deltaY * 0.84;
       target = current = gallery.scrollLeft;
     };
 
     const endTouchScroll = () => {
       if (touchDirection !== 'vertical' || Math.abs(touchVelocity) < 0.04) return;
-      let velocity = touchVelocity * 11;
+      let velocity = touchVelocity * 14;
       const glide = () => {
         const maximum = gallery.scrollWidth - gallery.clientWidth;
         const next = Math.max(0, Math.min(maximum, gallery.scrollLeft + velocity));
         gallery.scrollLeft = next;
         target = current = next;
-        velocity *= 0.9;
+        velocity *= 0.92;
         if (Math.abs(velocity) > 0.18 && next > 0 && next < maximum) {
           inertiaFrame = requestAnimationFrame(glide);
         } else {
