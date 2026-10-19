@@ -29,7 +29,7 @@
 body{overflow:hidden}
 .gallery-section{height:calc(100dvh - 88px);padding:0;position:relative;overflow:hidden}
 .gallery-meta{position:absolute;z-index:4;left:22px;right:22px;top:18px;margin:0;padding:0;border:0;pointer-events:none;text-shadow:0 1px 14px rgba(0,0,0,.55)}
-.gallery-scroll{height:100%;display:flex;align-items:stretch;gap:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;outline:none}
+.gallery-scroll{height:100%;display:flex;align-items:stretch;gap:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;overflow-anchor:none;scrollbar-width:none;outline:none}
 .gallery-scroll::-webkit-scrollbar{display:none}
 .gallery-intro{position:absolute;inset:0;z-index:8;display:flex;align-items:center;padding:5vw 7vw;color:#fff;pointer-events:none;overflow:hidden}
 .gallery-intro::before{content:"";position:absolute;inset:0;background:#181818;z-index:-1}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 export type InstagramPost = {
   id: string; caption?: string; media_type: 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM';
@@ -37,6 +37,20 @@ export default function Gallery() {
   const [showGalleryLabel, setShowGalleryLabel] = useState(true);
   const galleryRef = useRef<HTMLDivElement>(null);
   const lightboxTouch = useRef({ x: 0, y: 0, moved: false });
+  useLayoutEffect(() => {
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+    const resetToStart = () => {
+      window.scrollTo(0, 0);
+      if (galleryRef.current) galleryRef.current.scrollLeft = 0;
+    };
+    resetToStart();
+    const animationFrame = window.requestAnimationFrame(resetToStart);
+    window.addEventListener('pageshow', resetToStart);
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener('pageshow', resetToStart);
+    };
+  }, []);
   const loadInstagram = useCallback(async () => {
     const startedAt = Date.now();
     const finishMinimumLoadingTime = () => new Promise<void>((resolve) => {
