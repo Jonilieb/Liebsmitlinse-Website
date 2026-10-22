@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://liebsmitlinse.de'),
   title: 'Liebs mit Linse — Hochzeitsfotografie',
-  description: 'Authentische Hochzeitsfotografie von Katharina & Jonas in Reutlingen, Tübingen und Sigmaringen.',
+  description: 'Authentische Hochzeitsfotografie von Katharina & Jonas in Tübingen, Reutlingen, Nürtingen und Sigmaringen.',
+  alternates: { canonical: '/' },
   icons: {
     icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
     shortcut: '/favicon.svg',
