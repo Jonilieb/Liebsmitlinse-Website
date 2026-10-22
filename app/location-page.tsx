@@ -28,6 +28,10 @@ export function locationMetadata(location: Location): Metadata {
   };
 }
 
+function ExternalArrow() {
+  return <svg className="external-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+}
+
 export default function LocationPage({ location }: { location: Location }) {
   const otherLocations = locations.filter((item) => item.slug !== location.slug);
   const structuredData = {
@@ -40,7 +44,7 @@ export default function LocationPage({ location }: { location: Location }) {
   };
   return <main className="seo-page">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-    <header className="seo-header"><Link className="seo-wordmark" href="/">liebsmitlinse</Link><nav aria-label="Hauptnavigation"><Link href="/">Galerie</Link><a href="https://wa.me/4915788750135" target="_blank" rel="noreferrer">WhatsApp ↗</a></nav></header>
+    <header className="site-header seo-header"><Link className="wordmark" href="/">liebsmitlinse</Link><nav className="header-right" aria-label="Hauptnavigation"><a className="instagram-link whatsapp-link" href="https://wa.me/4915788750135" target="_blank" rel="noreferrer">Schreibe uns auf WhatsApp <ExternalArrow /></a><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <ExternalArrow /></a></nav></header>
     <section className="seo-hero">
       <p className="seo-kicker">Hochzeitsreportagen · {location.city}</p>
       <h1>Hochzeitsfotograf<br /><em>{location.city}</em></h1>
@@ -58,6 +62,6 @@ export default function LocationPage({ location }: { location: Location }) {
     <section className="seo-local"><p className="seo-kicker">Heiraten in {location.city}</p><h2>Echte Momente {location.setting}.</h2><p>Jede Hochzeit hat ihren eigenen Rhythmus. Deshalb lernen wir euch vorab kennen, besprechen die wichtigen Eckpunkte und planen ausreichend Luft für spontane Augenblicke ein. So entsteht eine Reportage, die euren Tag nicht inszeniert, sondern bewahrt.</p></section>
     <section className="seo-process"><p className="seo-kicker">So starten wir</p><ol><li><strong>Unverbindlich schreiben</strong><span>Erzählt uns von euch, eurem Datum und euren Plänen.</span></li><li><strong>Kennenlernen</strong><span>Wir sprechen in Ruhe darüber, was euch wichtig ist.</span></li><li><strong>Gemeinsam feiern</strong><span>An eurem Hochzeitstag könnt ihr euch ganz aufeinander konzentrieren.</span></li></ol></section>
     <section className="seo-cta"><p className="seo-kicker">Klingt nach euch?</p><h2>Lasst uns eure Geschichte festhalten.</h2><p>Schreibt uns ganz unverbindlich. Wir freuen uns, euch und eure Pläne für {location.city} kennenzulernen.</p><div><a href="https://wa.me/4915788750135" target="_blank" rel="noreferrer">Auf WhatsApp schreiben ↗</a><a href="mailto:jonas_wurster@gmx.net">E-Mail senden ↗</a></div></section>
-    <footer className="seo-footer"><div><Link className="seo-wordmark" href="/">liebsmitlinse</Link><address>Katharina &amp; Jonas Lieb<br />Stuttgarter Str. 35 · 72666 Neckartailfingen</address></div><nav aria-label="Weitere Regionen">{otherLocations.map((item) => <Link key={item.slug} href={`/${item.slug}`}>Hochzeitsfotograf {item.city}</Link>)}</nav></footer>
+    <footer className="seo-footer"><div><Link className="wordmark" href="/">liebsmitlinse</Link><address>Katharina &amp; Jonas Lieb<br />Stuttgarter Str. 35 · 72666 Neckartailfingen</address></div><nav aria-label="Weitere Regionen">{otherLocations.map((item) => <Link key={item.slug} href={`/${item.slug}`}>Hochzeitsfotograf {item.city}</Link>)}</nav></footer>
   </main>;
 }
