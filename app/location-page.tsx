@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import SeoPreview from './seo-preview';
 
 export type Location = {
   slug: string;
@@ -47,9 +48,10 @@ export default function LocationPage({ location }: { location: Location }) {
     <header className="site-header seo-header"><Link className="wordmark" href="/">liebsmitlinse</Link><nav className="header-right" aria-label="Hauptnavigation"><a className="instagram-link whatsapp-link" href="https://wa.me/4915788750135" target="_blank" rel="noreferrer">Schreibe uns auf WhatsApp <ExternalArrow /></a><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <ExternalArrow /></a></nav></header>
     <section className="seo-hero">
       <p className="seo-kicker">Hochzeitsreportagen · {location.city}</p>
-      <h1>Hochzeitsfotograf<br /><em>{location.city}</em></h1>
+      <h1>Hochzeitsfotograf in<br /><em>{location.city}</em></h1>
       <div className="seo-hero-copy"><p>Weil wichtige Momente es wert sind, festgehalten zu werden.</p><p>Wir sind Katharina und Jonas – ein Fotografenpaar für ehrliche, lebendige Hochzeitsreportagen {location.region}.</p></div>
     </section>
+    <SeoPreview />
     <section className="seo-intro">
       <figure><img src="/katharina-jonas-lieb.jpg" alt={`Katharina und Jonas von Liebsmitlinse – Hochzeitsfotografen für ${location.city}`} /><figcaption>Katharina &amp; Jonas · Liebsmitlinse</figcaption></figure>
       <div><p className="seo-kicker">Eure Geschichte, nicht unser Drehbuch</p><h2>Hochzeitsfotografie, die sich nach euch anfühlt.</h2><p>Wir fotografieren die lauten, leisen und vollkommen ungeplanten Augenblicke eures Tages – authentisch, nah und mit viel Liebe fürs Dazwischen. Dabei greifen wir nur dann ein, wenn ihr Orientierung braucht. Den Rest des Tages dürft ihr einfach erleben.</p><p>{location.localText}</p></div>
