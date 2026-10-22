@@ -48,7 +48,7 @@ export default function LocationPage({ location }: { location: Location }) {
     <header className="site-header seo-header"><Link className="wordmark" href="/">liebsmitlinse</Link><nav className="header-right" aria-label="Hauptnavigation"><a className="instagram-link whatsapp-link" href="https://wa.me/4915788750135" target="_blank" rel="noreferrer">Schreibe uns auf WhatsApp <ExternalArrow /></a><a className="instagram-link" href="https://www.instagram.com/liebsmitlinse/" target="_blank" rel="noreferrer">Instagram <ExternalArrow /></a></nav></header>
     <section className="seo-hero">
       <p className="seo-kicker">Hochzeitsreportagen · {location.city}</p>
-      <h1>Hochzeitsfotograf in<br /><em>{location.city}</em></h1>
+      <h1><span className="seo-title-role"><span className="seo-title-wedding">Hochzeits</span><span>fotograf in</span></span><br className="seo-title-city-break" /><em>{location.city}</em></h1>
       <div className="seo-hero-copy"><p>Weil wichtige Momente es wert sind, festgehalten zu werden.</p><p>Wir sind Katharina und Jonas – ein Fotografenpaar für ehrliche, lebendige Hochzeitsreportagen {location.region}.</p></div>
     </section>
     <SeoPreview />
